@@ -1,0 +1,87 @@
+body {
+    background-color: rgb(181, 223, 147);
+    margin: 0em;
+    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Fjalla One', sans-serif;
+}
+
+.cover {
+    height: 400px;
+    color: white;
+    background-image:url(./fotos/rsz_portada-dos.jpg);
+    background-size: cover;
+    background-position: center;
+    background-color:rgba(0,0,0,0.65);
+    background-blend-mode: darken;
+}
+
+.cover-small{
+    height: 200px;
+    background-blend-mode: normal;
+}
+
+.card {
+    border:0 !important;
+    box-shadow:  0 4px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
+    height: 150;
+    
+}
+
+.card-title{
+    min-height: 2.5rem;
+}
+
+.card-text{
+    height: 50px;
+    width: 98%;
+    text-align: justify;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-text:hover{
+    overflow: visible; 
+    white-space: normal;
+    height:auto;  
+}
+
+.mr-0{
+    margin-right: 0 !important;
+}
+.tienda {
+    position: relative;
+}
+
+.navbarsucuhome a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.margin-logo {
+    margin-left: 12px !important;
+}
+
+.navbartienda {
+    display: inline-flex !important; 
+    width: 20%;
+}
+
+.presentacion-tienda{
+    float: right;
+    width: 75%;
+}
+
+.navbarsucuhome {
+    z-index: 9999;
+
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
