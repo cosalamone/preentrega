@@ -15,13 +15,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
 <body>
-    
+
     <header>
         <!-- BARRA DE NAVEGACION -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbarsucuhome sticky">
@@ -59,39 +57,40 @@
 
 
     <!-- BARRA DE NAVEGACION TIENDA / FILTRO -->
-    <nav id="navbar-example3 "
-        class="mt-4 d-flex navbar navbar-light bg-light flex-column align-items-stretch p-3 navbartienda">
+    <div>
+        <nav id="navbar-example3 "
+            class=" mt-4 d-flex navbar navbar-light bg-light flex-column align-items-stretch p-3 navbartienda">
 
-        <a class="navbar-brand" href="#" onclick="mostrarProductos(listaProductos)">Tienda</a>
+            <a class="navbar-brand" href="#" onclick="mostrarProductos(listaProductos)">Tienda</a>
 
-        <nav class="nav nav-pills flex-column">
+            <nav class="nav hidden-xsnav-pills flex-column">
 
-            <a id="test" class="nav-link" href="#plantas" onclick="filtro('planta')">Plantas</a>
+                <a id="test" class="nav-link" href="#plantas" onclick="filtro('planta')">Plantas</a>
 
-            <nav class="nav nav-pills flex-column">
-                <a class="nav-link ms-3 my-1" style="color: rgb(65, 61, 61)">Suculentas</a>
-                <a class="nav-link ms-3 my-1" style="color: rgb(65, 61, 61)">De interior</a>
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link ms-3 my-1" style="color: rgb(65, 61, 61)">Suculentas</a>
+                    <a class="nav-link ms-3 my-1" style="color: rgb(65, 61, 61)">De interior</a>
+                </nav>
+
+                <a class="nav-link" href="#macetas" onclick="filtro('maceta')">Macetas</a>
+                <nav class="nav-link ms-3 my-1" style="color: rgb(65, 61, 61)">De barro</nav>
+                <nav class="nav-link ms-3 my-1" style="color: rgb(65, 61, 61)">De plastico</nav>
+
             </nav>
-
-            <a class="nav-link" href="#macetas" onclick="filtro('maceta')">Macetas</a>
-            <nav class="nav-link ms-3 my-1" style="color: rgb(65, 61, 61)">De barro</nav>
-            <nav class="nav-link ms-3 my-1" style="color: rgb(65, 61, 61)">De plastico</nav>
-
         </nav>
-    </nav>
 
-    <section class="presentacion-tienda">
-        <div >
-            <!-- CONTENIDO TIENDA  -->
-            <!-- SUCULENTAS  -->
-            <div class="mt-4">
-                <div class="row row-cols-1 row-cols-md-3 g-4 mr-0 " ; id="articulos">
+        <section class="presentacion-tienda">
+            <div>
+                <!-- CONTENIDO TIENDA  -->
+                <!-- SUCULENTAS  -->
+                <div class="mt-4">
+                    <div class="row row-cols-1 row-cols-md-3 g-4 mr-0 " ; id="articulos">
+                    </div>
                 </div>
+
             </div>
-
-        </div>
-    </section>
-
+        </section>
+    </div>
 
     <script src="tienda-online.js"></script>
 

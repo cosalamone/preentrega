@@ -151,7 +151,8 @@ function calcularCosto(compra) {
 
     if (sinStock.length > 0) {
         alert("El/los producto/s " + sinStock + " no se agregaron al carrito de compras porque no contamos con stock");
-    } else {
+    } 
+    if (costo>0) {
         alert("El valor total de tu compra incluyendo el costo de envío de $349 es de $" + (costo + 349));
     }
 }
