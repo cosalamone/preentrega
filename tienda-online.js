@@ -1,4 +1,3 @@
-
 // CLASES PLANTAS Y MACETAS
 class Planta {
     constructor(categoria, especie, tipo, precio, foto, descripcion,) {
@@ -64,6 +63,7 @@ window.onload = mostrarProductos(listaProductos);
 function mostrarProductos(listaProductos) {
     let elementoArticulos = document.getElementById("articulos");
     elementoArticulos.innerHTML = "";
+
     for (let i = 0; i < listaProductos.length; i++) {
         elementoArticulos.innerHTML += generarHTML(listaProductos[i])
     }
@@ -111,6 +111,7 @@ function filtro(categoria) {
 
 function carritoCompra() {
     let compra = lista();
+
     calcularCosto(compra);
 }
 
@@ -126,8 +127,7 @@ function lista() {
         if (promptIngresado != "fin")
             compra.push(promptIngresado);
 
-    }
-    while (promptIngresado != "fin")
+    } while (promptIngresado != "fin")
 
     return (compra);
 }
@@ -138,6 +138,7 @@ function calcularCosto(compra) {
 
     let costo = 0;
     let sinStock = [];
+
     for (let i = 0; i < compra.length; i++) {
         let precio = precioProducto(compra[i]);
 
@@ -164,5 +165,6 @@ function precioProducto(nombreProducto) {
             return (listaProductos[i].precio);
         }
     }
+
     return (null);
 }
