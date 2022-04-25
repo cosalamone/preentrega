@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title> Web Sucu.Home </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="tienda-online.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+</head>
+
+<body>
+    
+    <header>
+        <!-- BARRA DE NAVEGACION -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbarsucuhome sticky">
+            <a class="navbar-brand margin-logo " href="./fotos/LOGOSUCUHOME.png">Sucu.home</a>
+
+            <ul class="nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="tienda-online.html">Tienda Online</a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Contacto</a>
+                </li>
+                </li>
+                <li class="nav-item active ">
+                    <a class="nav-link" href="#" onclick="carritoCompra()">Carrito de compras</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- PORTADA  -->
+        <div class="cover d-flex justify-content-center align-items-center flex-column "
+            style="background-image: url(./fotos/rsz_tienda.jpg)">
+            <h1>
+                Sucu.Home
+            </h1>
+            <p>
+                Encontrá esa planta que tanto querés
+            </p>
+            <button type="button" class="btn btn-light" href="#">
+                Donde estamos
+            </button>
+        </div>
+    </header>
+
+
+    <!-- BARRA DE NAVEGACION TIENDA / FILTRO -->
+    <nav id="navbar-example3 "
+        class="mt-4 d-flex navbar navbar-light bg-light flex-column align-items-stretch p-3 navbartienda">
+
+        <a class="navbar-brand" href="#" onclick="mostrarProductos(listaProductos)">Tienda</a>
+
+        <nav class="nav nav-pills flex-column">
+
+            <a id="test" class="nav-link" href="#plantas" onclick="filtro('planta')">Plantas</a>
+
+            <nav class="nav nav-pills flex-column">
+                <a class="nav-link ms-3 my-1" style="color: rgb(65, 61, 61)">Suculentas</a>
+                <a class="nav-link ms-3 my-1" style="color: rgb(65, 61, 61)">De interior</a>
+            </nav>
+
+            <a class="nav-link" href="#macetas" onclick="filtro('maceta')">Macetas</a>
+            <nav class="nav-link ms-3 my-1" style="color: rgb(65, 61, 61)">De barro</nav>
+            <nav class="nav-link ms-3 my-1" style="color: rgb(65, 61, 61)">De plastico</nav>
+
+        </nav>
+    </nav>
+
+    <section class="presentacion-tienda">
+        <div >
+            <!-- CONTENIDO TIENDA  -->
+            <!-- SUCULENTAS  -->
+            <div class="mt-4">
+                <div class="row row-cols-1 row-cols-md-3 g-4 mr-0 " ; id="articulos">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <script src="tienda-online.js"></script>
+
+</body>
+
+</html>
