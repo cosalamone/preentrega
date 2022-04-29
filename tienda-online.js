@@ -92,7 +92,6 @@ function generarHTML(producto) {
 }
 
 
-
 // FUNCION FILTER LISTAPRODUCTOS 
 function filtro(categoria) {
 
@@ -105,10 +104,7 @@ function filtro(categoria) {
 
 
 
-
-
 // FUNCION CARRITOCOMPRA
-
 function carritoCompra() {
     let compra = lista();
 
