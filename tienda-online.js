@@ -128,6 +128,7 @@ function lista() {
     return (compra);
 }
 
+let envio = 349
 
 // funcion accesoria 2 - calcular costo de lista de compra 
 function calcularCosto(compra) {
@@ -149,7 +150,7 @@ function calcularCosto(compra) {
         alert("El/los producto/s " + sinStock + " no se agregaron al carrito de compras porque no contamos con stock");
     } 
     if (costo>0) {
-        alert("El valor total de tu compra incluyendo el costo de envío de $349 es de $" + (costo + 349));
+        alert(`El valor total de tu compra incluyendo el costo de envío de $${envio} es de $${costo + envio}`);
     }
 }
 
