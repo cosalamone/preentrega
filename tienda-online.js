@@ -55,7 +55,8 @@ let listaProductos = [
 
 
 let html = "";
-let canasto = [];
+let canasto = [new Planta(4, "planta", "gasteria", "normal", 250, "./fotos/rsz_1suculenta-4.jpg", "Necesitan cuidados similares a las haworthias, lugares con luz natural pero sin sol directo"),
+];
 let envio = 349
 
 
