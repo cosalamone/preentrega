@@ -5,6 +5,7 @@
     <title> Web Sucu.Home </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="tienda-online.css">
@@ -15,13 +16,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
 <body>
-    
+
     <header>
         <!-- BARRA DE NAVEGACION -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbarsucuhome sticky">
@@ -37,10 +36,12 @@
                 </li>
                 </li>
                 <li class="nav-item active ">
-                    <a class="nav-link" href="#" onclick="carritoCompra()">Carrito de compras</a>
+                    <a class="nav-link" href="#" id="iconoCarrito"><i class="bi bi-bag"></i></a>
                 </li>
             </ul>
         </nav>
+
+
 
         <!-- PORTADA  -->
         <div class="cover d-flex justify-content-center align-items-center flex-column "
@@ -59,7 +60,7 @@
 
 
     <!-- BARRA DE NAVEGACION TIENDA / FILTRO -->
-   
+
     <nav id="navbar-example3 "
         class=" mt-4 d-flex navbar navbar-light bg-light flex-column align-items-stretch p-3 navbartienda">
 
@@ -81,10 +82,9 @@
         </nav>
     </nav>
 
+    <!-- CONTENIDO TIENDA  -->
     <section class="presentacion-tienda">
-        <div >
-            <!-- CONTENIDO TIENDA  -->
-            <!-- SUCULENTAS  -->
+        <div>
             <div class="mt-4">
                 <div class="row row-cols-1 row-cols-md-3 g-4 mr-0 " ; id="articulos">
                 </div>
@@ -93,9 +93,45 @@
         </div>
     </section>
 
+    <!-- CARRITO DE COMPRAS  -->
+
+    <section class="carritoCompras">
+        <div class="card animate__animated animate__fadeIn" style="width: 18rem">
+
+            <ul class="list-group list-group-flush" id="contenedorCarrito">
+                
+            
+            </ul>
+
+            <ul class="list-group list-group-flush"  id="subtotalEnvio">
+                
+            
+            </ul>
+
+           
+        </div>
+    </section>
+
+
 
     <script src="tienda-online.js"></script>
 
 </body>
 
 </html>
+
+<!---- 
+<div class="card-carrito">
+    <p> Costo de envío: </p>
+    <h5 class="card-title">Subtotal:</h5> <span class="precio badge bg-dark">$${producto.precio}</span>
+</div>
+
+<li class="list-group-item">
+    <div class="card-carrito">
+        <h5 class="card-title">${producto.titulo()}</h5>
+        <p hidden> ${producto.numeroProducto} </p>
+        <div>
+            <span class="precio badge bg-dark">$${producto.precio}</span>
+        </div>
+    </div>
+</li>`-->
