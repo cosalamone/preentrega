@@ -73,7 +73,7 @@ function mostrarProductos(listaProductos) {
 }
 
 
-// FUNCION GENERARHTML 
+// FUNCION GENERARHTML para la tienda 
 function generarHTML(producto) {
     html =
         `<div class="col">
@@ -98,7 +98,7 @@ function generarHTML(producto) {
 }
 
 
-// FUNCION FILTER LISTAPRODUCTOS 
+// FUNCION FILTER LISTAPRODUCTOS en tienda
 function filtro(categoria) {
     let listaFiltrada = []
 
@@ -116,22 +116,10 @@ function agregarProducto(numeroProducto) {
     let productoAgregado = listaProductos.find(producto => producto.numeroProducto == numeroProducto)
     canasto.push(productoAgregado)
     mostrarProductosCarrito(canasto)
-    mostrarSubtotalEnvio()
+  
 }
 
 
-// funcion mostrar subtotal y costo de envio
-function mostrarSubtotalEnvio() {
-    let elementoContendorSubtotalEnvio = document.getElementById("subtotalEnvio");
-    elementoContendorSubtotalEnvio.innerHTML = ` <li class="list-group-item">
-    <div class="card-carrito">
-        <p> Costo de envío: $${envio}</p>
-        <h5 class="card-title">Subtotal:</h5> 
-        <span class="precio badge bg-dark">
-        $xxxxx</span>
-    </div>
-    </li>`
-}
 
 
 // Funcion mostrarPtoductosCarrito
