@@ -55,9 +55,8 @@ let listaProductos = [
 
 
 let html = "";
-let canasto = [new Planta(4, "planta", "gasteria", "normal", 250, "./fotos/rsz_1suculenta-4.jpg", "Necesitan cuidados similares a las haworthias, lugares con luz natural pero sin sol directo"),
-];
-let envio = 349
+let canasto = [];
+let envio = 349;
 
 
 window.onload = mostrarProductos(listaProductos);
@@ -107,9 +106,80 @@ function filtro(categoria) {
     mostrarProductos(listaFiltrada)
 }
 
+
+/*
+// FUNCION CARRITOCOMPRA
+function carritoCompra() {
+    let compra = lista();
+
+    calcularCosto(compra);
+}
+
+
+// funcion accesoria 1 - obtener la lista de compra 
+function lista() {
+    let compra = [];
+    let promptIngresado = "";
+
+    do {
+        promptIngresado = prompt("¿Qué plantas querés comprar? Al finalizar su carrito escriba 'fin'").toLowerCase();
+
+        if (promptIngresado != "fin")
+            compra.push(promptIngresado);
+
+    } while (promptIngresado != "fin")
+
+    return (compra);
+}
+
+
+
+// funcion accesoria 2 - calcular costo de lista de compra 
+function calcularCosto(compra) {
+
+    let costo = 0;
+    let sinStock = [];
+
+    for (let i = 0; i < compra.length; i++) {
+        let precio = precioProducto(compra[i]);
+
+        if (precio != null) {
+            costo = costo + precio;
+        } else {
+            sinStock.push(compra[i]);
+        }
+    }
+
+    if (sinStock.length > 0) {
+        alert("El/los producto/s " + sinStock + " no se agregaron al carrito de compras porque no contamos con stock");
+    }
+    if (costo > 0) {
+        alert(`El valor total de tu compra incluyendo el costo de envío de $${envio} es de $${costo + envio}`);
+    }
+}
+
+
+// funcion 3 - calcular Precio del Producto
+function precioProducto(nombreProducto) {
+
+    for (let i = 0; i < listaProductos.length; i++) {
+        if (nombreProducto == listaProductos[i].titulo()) {
+            return (listaProductos[i].precio);
+        }
+    }
+
+    return (null);
+}
+*/
+
+
+
 // ICONOCARRITO
 let botonCarrito = document.getElementById("iconoCarrito")
 botonCarrito.onclick = () => mostrarProductosCarrito(canasto)
+
+
+let total = 0;
 
 
 // funcion agregar productos a carrito
@@ -117,10 +187,30 @@ function agregarProducto(numeroProducto) {
     let productoAgregado = listaProductos.find(producto => producto.numeroProducto == numeroProducto)
     canasto.push(productoAgregado)
     mostrarProductosCarrito(canasto)
-  
+    mostrarSubtotalEnvio()
 }
 
 
+// funcion mostrar subtotal y costo de envio
+function mostrarSubtotalEnvio() {
+    let elementoContendorSubtotalEnvio = document.getElementById("subtotalEnvio");
+    elementoContendorSubtotalEnvio.innerHTML = ` <li class="list-group-item">
+    <div class="card-carrito">
+    <p> Costo de envío: $${envio}</p>
+        <h5 class="card-title">Total con envío: $${total + envio}</h5> 
+    </div>
+    </li>`
+
+}
+
+
+function costoCarrito(canasto) {
+    total = 0
+    for (let i = 0; i < canasto.length; i++) {
+        total += canasto[i].precio
+    }
+    return (total)
+}
 
 
 // Funcion mostrarPtoductosCarrito
@@ -130,6 +220,7 @@ function mostrarProductosCarrito(canasto) {
     for (let i = 0; i < canasto.length; i++) {
         elementoContenedorCarrito.innerHTML += generarCardHTMLCarrito(canasto[i])
     }
+    costoCarrito(canasto)
 }
 
 
