@@ -238,3 +238,9 @@ function generarCardHTMLCarrito(producto) {
     </li>`
     return (htmlCarrito)
 }
+
+
+
+// Guardar carrito en storge
+
+localStorage.setItem("carrito", canasto)
