@@ -88,7 +88,7 @@ function generarHTML(producto) {
     <p hidden> ${producto.numeroProducto} </p>
     <div>
     <span class="precio badge bg-dark">$${producto.precio}</span>
-    <a class="nav-link" href="#!" onclick= agregarProducto(${producto.numeroProducto})  ><i class="iCarrito bi bi-bag-plus"></i></a></div>
+    <a class="nav-link" href="#!" onclick= agregarProducto(${producto.numeroProducto})  ><i class="iCarrito bi bi-cart-plus"></i></a></div>
 
     </div>
     </div>
@@ -105,73 +105,6 @@ function filtro(categoria) {
     listaFiltrada = listaProductos.filter(unProducto => unProducto.categoria == categoria);
     mostrarProductos(listaFiltrada)
 }
-
-
-/*
-// FUNCION CARRITOCOMPRA
-function carritoCompra() {
-    let compra = lista();
-
-    calcularCosto(compra);
-}
-
-
-// funcion accesoria 1 - obtener la lista de compra 
-function lista() {
-    let compra = [];
-    let promptIngresado = "";
-
-    do {
-        promptIngresado = prompt("¿Qué plantas querés comprar? Al finalizar su carrito escriba 'fin'").toLowerCase();
-
-        if (promptIngresado != "fin")
-            compra.push(promptIngresado);
-
-    } while (promptIngresado != "fin")
-
-    return (compra);
-}
-
-
-
-// funcion accesoria 2 - calcular costo de lista de compra 
-function calcularCosto(compra) {
-
-    let costo = 0;
-    let sinStock = [];
-
-    for (let i = 0; i < compra.length; i++) {
-        let precio = precioProducto(compra[i]);
-
-        if (precio != null) {
-            costo = costo + precio;
-        } else {
-            sinStock.push(compra[i]);
-        }
-    }
-
-    if (sinStock.length > 0) {
-        alert("El/los producto/s " + sinStock + " no se agregaron al carrito de compras porque no contamos con stock");
-    }
-    if (costo > 0) {
-        alert(`El valor total de tu compra incluyendo el costo de envío de $${envio} es de $${costo + envio}`);
-    }
-}
-
-
-// funcion 3 - calcular Precio del Producto
-function precioProducto(nombreProducto) {
-
-    for (let i = 0; i < listaProductos.length; i++) {
-        if (nombreProducto == listaProductos[i].titulo()) {
-            return (listaProductos[i].precio);
-        }
-    }
-
-    return (null);
-}
-*/
-
 
 
 // ICONOCARRITO
@@ -200,7 +133,6 @@ function mostrarSubtotalEnvio() {
         <h5 class="card-title">Total con envío: $${total + envio}</h5> 
     </div>
     </li>`
-
 }
 
 
@@ -221,6 +153,7 @@ function mostrarProductosCarrito(canasto) {
         elementoContenedorCarrito.innerHTML += generarCardHTMLCarrito(canasto[i])
     }
     costoCarrito(canasto)
+    localStorage.setItem("carrito", JSON.s(canasto))
 }
 
 
@@ -232,7 +165,8 @@ function generarCardHTMLCarrito(producto) {
     <h5 class="card-title">${producto.titulo()}</h5>
     <p hidden> ${producto.numeroProducto} </p>
     <div>
-    <span class="precio badge bg-dark">$${producto.precio}</span>
+    <span class="precio badge bg-dark">$${producto.precio}</span> 
+    <i class="iTrash bi bi-trash3"></i>
     </div>
     </div>
     </li>`
@@ -240,7 +174,3 @@ function generarCardHTMLCarrito(producto) {
 }
 
 
-
-// Guardar carrito en storge
-
-localStorage.setItem("carrito", canasto)
