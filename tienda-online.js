@@ -186,14 +186,15 @@ function generarCardHTMLCarrito(producto) {
     return (htmlCarrito)
 }
 
+const elementoCarrito = document.getElementById("popUpCarrito")
 
 function  hideShowProductos(){
-    if ( document.getElementById("popUpCarrito").style.display == "block"){
-        document.getElementById("popUpCarrito").style.display = "none"
-    } else (document.getElementById("popUpCarrito").style.display = "block")
+    if ( elementoCarrito.style.display == "block"){
+        elementoCarrito.style.display = "none"
+    } else (elementoCarrito.style.display = "block")
 }
 
 function showCarrito(){
-    if ( document.getElementById("popUpCarrito").style.display == "none"){
-        document.getElementById("popUpCarrito").style.display = "block"}
+    if ( elementoCarrito.style.display == "none"){
+        elementoCarrito.style.display = "block"}
 }
