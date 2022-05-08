@@ -109,7 +109,7 @@ function filtro(categoria) {
 
 // ICONOCARRITO
 let botonCarrito = document.getElementById("iconoCarrito")
-botonCarrito.onclick = () => mostrarProductosCarrito(canasto)
+botonCarrito.onclick = () => hideShowProductos()
 
 
 let total = 0;
@@ -137,7 +137,7 @@ function mostrarSubtotalEnvio() {
 
 
 function costoCarrito(canasto) {
-    total = 0
+    total = 0;
     for (let i = 0; i < canasto.length; i++) {
         total += canasto[i].precio
     }
@@ -145,16 +145,29 @@ function costoCarrito(canasto) {
 }
 
 
-// Funcion mostrarPtoductosCarrito
+// Funcion mostrarProductosCarrito
 function mostrarProductosCarrito(canasto) {
     let elementoContenedorCarrito = document.getElementById("contenedorCarrito");
     elementoContenedorCarrito.innerHTML = ""
     for (let i = 0; i < canasto.length; i++) {
         elementoContenedorCarrito.innerHTML += generarCardHTMLCarrito(canasto[i])
+        
     }
     costoCarrito(canasto)
-    localStorage.setItem("carrito", JSON.s(canasto))
+    showCarrito()
+
+    let jstring = JSON.stringify(canasto)
+    localStorage.setItem("carrito", jstring)
+
 }
+
+// recuperar productos del carrito
+function recuperarProductosAlmacenados (){
+const almacenados = JSON.parse(localStorage.getItem("carrito"));
+return (almacenados)
+}
+
+window.onload = recuperarProductosAlmacenados()
 
 
 // Generar HTMLCarrito ()
@@ -174,3 +187,13 @@ function generarCardHTMLCarrito(producto) {
 }
 
 
+function  hideShowProductos(){
+    if ( document.getElementById("popUpCarrito").style.display == "block"){
+        document.getElementById("popUpCarrito").style.display = "none"
+    } else (document.getElementById("popUpCarrito").style.display = "block")
+}
+
+function showCarrito(){
+    if ( document.getElementById("popUpCarrito").style.display == "none"){
+        document.getElementById("popUpCarrito").style.display = "block"}
+}
