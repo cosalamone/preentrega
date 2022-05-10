@@ -151,35 +151,50 @@ function mostrarProductosCarrito(canasto) {
     elementoContenedorCarrito.innerHTML = ""
     for (let i = 0; i < canasto.length; i++) {
         elementoContenedorCarrito.innerHTML += generarCardHTMLCarrito(canasto[i])
-        
     }
     costoCarrito(canasto)
-    showCarrito()
+   // showCarrito()
 
-    let jstring = JSON.stringify(canasto)
-    localStorage.setItem("carrito", jstring)
+    let jString = JSON.stringify(canasto)
+    localStorage.setItem("carrito", jString)
+
 
 }
 
-// recuperar productos del carrito
-function recuperarProductosAlmacenados (){
-const almacenados = JSON.parse(localStorage.getItem("carrito"));
-return (almacenados)
+// recuperar productos del carrito - STORAGE
+function recuperarProductosAlmacenados() {
+    
+    const almacenados = JSON.parse(window.localStorage.getItem("carrito"));
+    productos = [];
+
+    for (const objeto of almacenados) {
+        if (objeto.categoria == "planta") {
+            productos.push(new Planta(objeto))
+        }
+        else {
+
+            productos.push(new Maceta(objeto))
+        }
+    }
+    canasto = productos;
+
+
 }
 
 window.onload = recuperarProductosAlmacenados()
 
 
+
 // Generar HTMLCarrito ()
 function generarCardHTMLCarrito(producto) {
     htmlCarrito = ` 
-    <li class="list-group-item">
+    <li class="list-group-item animate__animated animate__fadeIn">
     <div class="card-carrito">
     <h5 class="card-title">${producto.titulo()}</h5>
     <p hidden> ${producto.numeroProducto} </p>
     <div>
     <span class="precio badge bg-dark">$${producto.precio}</span> 
-    <i class="iTrash bi bi-trash3"></i>
+    <a onclick = eliminarProductoCarrito > <i class="iTrash bi bi-trash3"></i></a>
     </div>
     </div>
     </li>`
@@ -188,13 +203,14 @@ function generarCardHTMLCarrito(producto) {
 
 const elementoCarrito = document.getElementById("popUpCarrito")
 
-function  hideShowProductos(){
-    if ( elementoCarrito.style.display == "block"){
+function hideShowProductos() {
+    if (elementoCarrito.style.display == "block") {
         elementoCarrito.style.display = "none"
     } else (elementoCarrito.style.display = "block")
 }
 
-function showCarrito(){
-    if ( elementoCarrito.style.display == "none"){
-        elementoCarrito.style.display = "block"}
+function showCarrito() {
+    if (elementoCarrito.style.display == "none") {
+        elementoCarrito.style.display = "block"
+    }
 }
