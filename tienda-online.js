@@ -153,7 +153,7 @@ function mostrarProductosCarrito(canasto) {
         elementoContenedorCarrito.innerHTML += generarCardHTMLCarrito(canasto[i])
     }
     costoCarrito(canasto)
-   // showCarrito()
+    showCarrito()
 
     let jString = JSON.stringify(canasto)
     localStorage.setItem("carrito", jString)
