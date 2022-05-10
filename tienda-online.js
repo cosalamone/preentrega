@@ -60,6 +60,7 @@ let envio = 349;
 
 
 window.onload = mostrarProductos(listaProductos);
+window.onload = recuperarProductosAlmacenados()
 
 
 // FUNCION MOSTRARPRODUCTOS en tienda
@@ -113,11 +114,11 @@ botonCarrito.onclick = () => hideShowProductos()
 
 
 let total = 0;
-
+let productoAgregado = {};
 
 // funcion agregar productos a carrito
 function agregarProducto(numeroProducto) {
-    let productoAgregado = listaProductos.find(producto => producto.numeroProducto == numeroProducto)
+    productoAgregado = listaProductos.find(producto => producto.numeroProducto == numeroProducto)
     canasto.push(productoAgregado)
     mostrarProductosCarrito(canasto)
     mostrarSubtotalEnvio()
@@ -157,8 +158,6 @@ function mostrarProductosCarrito(canasto) {
 
     let jString = JSON.stringify(canasto)
     localStorage.setItem("carrito", jString)
-
-
 }
 
 // recuperar productos del carrito - STORAGE
@@ -167,21 +166,21 @@ function recuperarProductosAlmacenados() {
     const almacenados = JSON.parse(window.localStorage.getItem("carrito"));
     productos = [];
 
-    for (const objeto of almacenados) {
-        if (objeto.categoria == "planta") {
-            productos.push(new Planta(objeto))
-        }
-        else {
+    if (almacenados != null) {
+        for (const productoGuardado of almacenados) {
+            if (productoGuardado.categoria == "planta") {
+                productos.push(new Planta(productoGuardado.numeroProducto, productoGuardado.categoria, productoGuardado.especie, productoGuardado.tipo, productoGuardado.precio, productoGuardado.foro, productoGuardado.descripcion))
+            }
+            else {
 
-            productos.push(new Maceta(objeto))
+                productos.push(new Maceta(productoGuardado.numeroProducto, productoGuardado.categoria, productoGuardado.material, productoGuardado.color, productoGuardado.tamaño, productoGuardado.foto, productoGuardado.precio, productoGuardado.descripcion))
+            }
         }
     }
     canasto = productos;
 
-
 }
 
-window.onload = recuperarProductosAlmacenados()
 
 
 
@@ -206,7 +205,11 @@ const elementoCarrito = document.getElementById("popUpCarrito")
 function hideShowProductos() {
     if (elementoCarrito.style.display == "block") {
         elementoCarrito.style.display = "none"
-    } else (elementoCarrito.style.display = "block")
+    } else if(elementoCarrito.style.display = "block"){
+        mostrarSubtotalEnvio()
+        mostrarProductosCarrito(canasto)
+    
+    }
 }
 
 function showCarrito() {
