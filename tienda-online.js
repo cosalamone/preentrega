@@ -108,7 +108,7 @@ function filtro(categoria) {
 }
 
 
-// ICONOCARRITO
+// ICONOCARRITO - NAVBAR
 let botonCarrito = document.getElementById("iconoCarrito")
 botonCarrito.onclick = () => hideShowProductos()
 
@@ -116,7 +116,7 @@ botonCarrito.onclick = () => hideShowProductos()
 let total = 0;
 let productoAgregado = {};
 
-// funcion agregar productos a carrito
+// funcion agregar productos a carrito - CARRITO 
 function agregarProducto(numeroProducto) {
     productoAgregado = listaProductos.find(producto => producto.numeroProducto == numeroProducto)
     canasto.push(productoAgregado)
@@ -125,7 +125,7 @@ function agregarProducto(numeroProducto) {
 }
 
 
-// funcion mostrar subtotal y costo de envio
+// funcion mostrar subtotal y costo de envio - CARRITO 
 function mostrarSubtotalEnvio() {
     let elementoContendorSubtotalEnvio = document.getElementById("subtotalEnvio");
     elementoContendorSubtotalEnvio.innerHTML = ` <li class="list-group-item">
@@ -136,7 +136,6 @@ function mostrarSubtotalEnvio() {
     </li>`
 }
 
-
 function costoCarrito(canasto) {
     total = 0;
     for (let i = 0; i < canasto.length; i++) {
@@ -146,21 +145,25 @@ function costoCarrito(canasto) {
 }
 
 
-// Funcion mostrarProductosCarrito
+// Funcion mostrarProductosCarrito - CARRITO 
 function mostrarProductosCarrito(canasto) {
     let elementoContenedorCarrito = document.getElementById("contenedorCarrito");
     elementoContenedorCarrito.innerHTML = ""
     for (let i = 0; i < canasto.length; i++) {
         elementoContenedorCarrito.innerHTML += generarCardHTMLCarrito(canasto[i])
     }
-    costoCarrito(canasto)
-    showCarrito()
+    costoCarrito(canasto);
+    showCarrito();
+    almacenarProductos();
+}
 
+// ALMACENAR productos del carrito - STORAGE
+function almacenarProductos (){
     let jString = JSON.stringify(canasto)
     localStorage.setItem("carrito", jString)
 }
 
-// recuperar productos del carrito - STORAGE
+// RECUPERAR productos del carrito - STORAGE
 function recuperarProductosAlmacenados() {
     
     const almacenados = JSON.parse(window.localStorage.getItem("carrito"));
@@ -181,9 +184,6 @@ function recuperarProductosAlmacenados() {
 
 }
 
-
-
-
 // Generar HTMLCarrito ()
 function generarCardHTMLCarrito(producto) {
     htmlCarrito = ` 
@@ -193,7 +193,7 @@ function generarCardHTMLCarrito(producto) {
     <p hidden> ${producto.numeroProducto} </p>
     <div>
     <span class="precio badge bg-dark">$${producto.precio}</span> 
-    <a onclick = eliminarProductoCarrito > <i class="iTrash bi bi-trash3"></i></a>
+    <a> <i class="iTrash bi bi-trash3"></i></a>
     </div>
     </div>
     </li>`
@@ -202,6 +202,7 @@ function generarCardHTMLCarrito(producto) {
 
 const elementoCarrito = document.getElementById("popUpCarrito")
 
+// funciones para mostrar y ocultar productos
 function hideShowProductos() {
     if (elementoCarrito.style.display == "block") {
         elementoCarrito.style.display = "none"
