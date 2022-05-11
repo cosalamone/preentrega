@@ -60,7 +60,7 @@ let envio = 349;
 
 
 window.onload = mostrarProductos(listaProductos);
-window.onload = recuperarProductosAlmacenados()
+window.onload = recuperarProductosAlmacenados();
 
 
 // FUNCION MOSTRARPRODUCTOS en tienda
@@ -69,7 +69,7 @@ function mostrarProductos(listaProductos) {
     elementoArticulos.innerHTML = "";
 
     for (let i = 0; i < listaProductos.length; i++) {
-        elementoArticulos.innerHTML += generarHTML(listaProductos[i])
+        elementoArticulos.innerHTML += generarHTML(listaProductos[i]);
     }
 }
 
@@ -89,28 +89,28 @@ function generarHTML(producto) {
     <p hidden> ${producto.numeroProducto} </p>
     <div>
     <span class="precio badge bg-dark">$${producto.precio}</span>
-    <a class="nav-link" href="#!" onclick= agregarProducto(${producto.numeroProducto})  ><i class="iCarrito bi bi-cart-plus"></i></a></div>
+    <a class="nav-link" href="#!" onclick= agregarProducto(${producto.numeroProducto})><i class="iCarrito bi bi-cart-plus"></i></a></div>
 
     </div>
     </div>
     </div> `
 
-    return (html)
+    return (html);
 }
 
 
 // FUNCION FILTER LISTAPRODUCTOS en tienda
 function filtro(categoria) {
-    let listaFiltrada = []
+    let listaFiltrada = [];
 
     listaFiltrada = listaProductos.filter(unProducto => unProducto.categoria == categoria);
-    mostrarProductos(listaFiltrada)
+    mostrarProductos(listaFiltrada);
 }
 
 
 // ICONOCARRITO - NAVBAR
-let botonCarrito = document.getElementById("iconoCarrito")
-botonCarrito.onclick = () => hideShowProductos()
+let botonCarrito = document.getElementById("iconoCarrito");
+botonCarrito.onclick = () => hideShowProductos();
 
 
 let total = 0;
@@ -119,9 +119,9 @@ let productoAgregado = {};
 // funcion agregar productos a carrito - CARRITO 
 function agregarProducto(numeroProducto) {
     productoAgregado = listaProductos.find(producto => producto.numeroProducto == numeroProducto)
-    canasto.push(productoAgregado)
-    mostrarProductosCarrito(canasto)
-    mostrarSubtotalEnvio()
+    canasto.push(productoAgregado);
+    mostrarProductosCarrito(canasto);
+    mostrarSubtotalEnvio();
 }
 
 
@@ -139,18 +139,18 @@ function mostrarSubtotalEnvio() {
 function costoCarrito(canasto) {
     total = 0;
     for (let i = 0; i < canasto.length; i++) {
-        total += canasto[i].precio
+        total += canasto[i].precio;
     }
-    return (total)
+    return (total);
 }
 
 
 // Funcion mostrarProductosCarrito - CARRITO 
 function mostrarProductosCarrito(canasto) {
     let elementoContenedorCarrito = document.getElementById("contenedorCarrito");
-    elementoContenedorCarrito.innerHTML = ""
+    elementoContenedorCarrito.innerHTML = "";
     for (let i = 0; i < canasto.length; i++) {
-        elementoContenedorCarrito.innerHTML += generarCardHTMLCarrito(canasto[i])
+        elementoContenedorCarrito.innerHTML += generarCardHTMLCarrito(canasto[i]);
     }
     costoCarrito(canasto);
     showCarrito();
@@ -159,8 +159,8 @@ function mostrarProductosCarrito(canasto) {
 
 // ALMACENAR productos del carrito - STORAGE
 function almacenarProductos (){
-    let jString = JSON.stringify(canasto)
-    localStorage.setItem("carrito", jString)
+    let jString = JSON.stringify(canasto);
+    localStorage.setItem("carrito", jString);
 }
 
 // RECUPERAR productos del carrito - STORAGE
@@ -172,11 +172,13 @@ function recuperarProductosAlmacenados() {
     if (almacenados != null) {
         for (const productoGuardado of almacenados) {
             if (productoGuardado.categoria == "planta") {
-                productos.push(new Planta(productoGuardado.numeroProducto, productoGuardado.categoria, productoGuardado.especie, productoGuardado.tipo, productoGuardado.precio, productoGuardado.foro, productoGuardado.descripcion))
+                productos.push(new Planta(productoGuardado.numeroProducto, productoGuardado.categoria, productoGuardado.especie, 
+                    productoGuardado.tipo, productoGuardado.precio, productoGuardado.foto, productoGuardado.descripcion));
             }
             else {
 
-                productos.push(new Maceta(productoGuardado.numeroProducto, productoGuardado.categoria, productoGuardado.material, productoGuardado.color, productoGuardado.tamaño, productoGuardado.foto, productoGuardado.precio, productoGuardado.descripcion))
+                productos.push(new Maceta(productoGuardado.numeroProducto, productoGuardado.categoria, productoGuardado.material, 
+                    productoGuardado.color, productoGuardado.tamaño, productoGuardado.foto, productoGuardado.precio, productoGuardado.descripcion));
             }
         }
     }
@@ -193,28 +195,30 @@ function generarCardHTMLCarrito(producto) {
     <p hidden> ${producto.numeroProducto} </p>
     <div>
     <span class="precio badge bg-dark">$${producto.precio}</span> 
-    <a> <i class="iTrash bi bi-trash3"></i></a>
+    <a onClick = eliminarProductoCarrito () > <i class="iTrash bi bi-trash3"></i></a>
     </div>
     </div>
     </li>`
-    return (htmlCarrito)
+    return (htmlCarrito);
 }
 
-const elementoCarrito = document.getElementById("popUpCarrito")
+const elementoCarrito = document.getElementById("popUpCarrito");
 
 // funciones para mostrar y ocultar productos
 function hideShowProductos() {
     if (elementoCarrito.style.display == "block") {
-        elementoCarrito.style.display = "none"
+        elementoCarrito.style.display = "none";
     } else if(elementoCarrito.style.display = "block"){
-        mostrarSubtotalEnvio()
-        mostrarProductosCarrito(canasto)
-    
+        mostrarSubtotalEnvio();
+        mostrarProductosCarrito(canasto);
     }
 }
 
+
 function showCarrito() {
-    if (elementoCarrito.style.display == "none") {
-        elementoCarrito.style.display = "block"
-    }
+    (elementoCarrito.style.display == "none")  ?  (elementoCarrito.style.display = "block") : (elementoCarrito.style.display = "none");
+}
+
+function eliminarProductoCarrito (){
+
 }
