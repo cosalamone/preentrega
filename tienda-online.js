@@ -1,14 +1,16 @@
-// CLASES PLANTAS Y MACETAS
+// CLASES PLANTAS Y MACETASif
 class Planta {
-    constructor(numeroProducto, categoria, especie, tipo, precio, foto, descripcion,) {
-        this.numeroProducto = numeroProducto;
-        this.categoria = categoria;
-        this.especie = especie;
-        this.tipo = tipo;
-        this.precio = precio;
-        this.foto = foto;
-        this.descripcion = descripcion;
+    constructor(producto) {
+        this.numeroProducto = producto.numeroProducto;
+        this.categoria = producto.categoria;
+        this.especie = producto.especie;
+        this.tipo = producto.tipo;
+        this.precio = producto.precio;
+        this.foto = producto.foto;
+        this.descripcion = producto.descripcion;
     }
+
+
     titulo() {
         return (this.especie + " " + this.tipo)
     }
@@ -16,15 +18,15 @@ class Planta {
 
 
 class Maceta {
-    constructor(numeroProducto, categoria, material, color, tamaño, foto, precio, descripcion) {
-        this.numeroProducto = numeroProducto;
-        this.categoria = categoria;
-        this.material = material;
-        this.color = color;
-        this.tamaño = tamaño;
-        this.foto = foto;
-        this.precio = precio;
-        this.descripcion = descripcion;
+    constructor(producto) {
+        this.numeroProducto = producto.numeroProducto;
+        this.categoria = producto.categoria;
+        this.material = producto.material;
+        this.color = producto.color;
+        this.tamaño = producto.tamaño;
+        this.foto = producto.foto;
+        this.precio = producto.precio;
+        this.descripcion = producto.descripcion;
     }
     titulo() {
         return (this.categoria + " de " + this.material + " " + this.color + " n" + this.tamaño)
@@ -34,23 +36,23 @@ class Maceta {
 
 // ARRAY DE PRODUCTOS 
 let listaProductos = [
-    new Planta(1, "planta", "haworthia", "fasciata", 200, "./fotos/rsz_haworthia_fasciata.jpg", "¡Suculenta ideal para interior! Ideal para lugares iluminados sin sol directo."),
-    new Planta(2, "planta", "graptopetalum", "paraguayense", 150, "./fotos/rsz_suculentas-1.jpg", "Ideal para lugares con sol directo entre 3 y 6 horas. En verano protegerla de las horas mpas fuertes de sol."),
-    new Planta(3, "planta", "echeveria", "caly argentea", 250, "./fotos/rsz_echeveriacalyargentea.jpg", "Por su pruina aguanta bien las horas de sol. Hay que tener cuidado con no excederse con el riego, es propensa a pudrición de tallo"),
-    new Planta(4, "planta", "gasteria", "normal", 250, "./fotos/rsz_1suculenta-4.jpg", "Necesitan cuidados similares a las haworthias, lugares con luz natural pero sin sol directo"),
-    new Planta(5, "planta", "sedum", "burrito", 250, "./fotos/rsz_sedumburrito.jpg", "Hermosa suculenta colgante. Ideal para lugares iluminados con pocas horas de sol, preferentemente sol suave de la mañana o últimos de la tarde"),
-    new Planta(6, "planta", "calathea", "triostar", 350, "./fotos/rsz_calatheas.jpg", "Ideal para lugares iluminados sin sol directo"),
-    new Planta(7, "planta", "pothus", "variegado", 500, "./fotos/rsz_pothos.jpg", "Planta de interior, sin sol directo, ideal para lugares humedos como el baño"),
-    new Planta(8, "planta", "monstera deliciosa", "normal", 1200, "./fotos/rsz_monstera.jpg", "Ideal para lugares con mediasombra, como debajo de un arbol o lugar semitechado"),
-    new Maceta(9, "maceta", "plastico", "negra", 8, "./fotos/rsz_maceta-plastico-8-negra.jpg", 50, "Maceta de plastico de color negra. Tamaño numero 8"),
-    new Maceta(10, "maceta", "plastico", "negra", 12, "./fotos/rsz_maceta-plastico-negra-12.jpg", 70, "Maceta de plastico de color negra. Tamaño numero 12"),
-    new Maceta(11, "maceta", "plastico", "negra", 24, "./fotos/rsz_maceta-plastico-24-negra.jpg", 140, "Maceta de plastico de color negra. Tamaño numero 24"),
-    new Maceta(12, "maceta", "plastico", "blanco", 8, "./fotos/rsz_maceta-plastico-blanca-8.jpg", 50, "Maceta de plastico de color blanco. Tamaño numero 8"),
-    new Maceta(13, "maceta", "plastico", "blanco", 12, "./fotos/rsz_maceta-plastico-12.jpg", 70, "Maceta de plastico de color blanco. Tamaño numero 12"),
-    new Maceta(14, "maceta", "plastico", "blanco", 24, "./fotos/rsz_maceta-plastico-blanca-24.jpg", 140, "Maceta de plastico de color blanco. Tamaño numero 24"),
-    new Maceta(15, "maceta", "barro", "terracota", 8, "./fotos/rsz_maceta-barro-8.jpg", 90, "Maceta de barro. Tamaño numero 8"),
-    new Maceta(16, "maceta", "barro", "terracota", 12, "./fotos/rsz_maceta-barro-12.jpg", 120, "Maceta de barro. Tamaño numero 12"),
-    new Maceta(17, "maceta", "barro", "terracota", 24, "./fotos/rsz_maceta-barro-24.jpg", 200, "Maceta de barro. Tamaño numero 24"),
+    new Planta({ numeroProducto: 1, categoria: "planta", especie: "haworthia", tipo: "fasciata", precio: 200, foto: "./fotos/rsz_haworthia_fasciata.jpg", descripcion: "¡Suculenta ideal para interior! Ideal para lugares iluminados sin sol directo." }),
+    new Planta({ numeroProducto: 2, categoria: "planta", especie: "graptopetalum", tipo: "paraguayense", precio: 150, foto: "./fotos/rsz_suculentas-1.jpg", descripcion: "Ideal para lugares con sol directo entre 3 y 6 horas. En verano protegerla de las horas mpas fuertes de sol." }),
+    new Planta({ numeroProducto: 3, categoria: "planta", especie: "echeveria", tipo: "caly argentea", precio: 250, foto: "./fotos/rsz_echeveriacalyargentea.jpg", descripcion: "Por su pruina aguanta bien las horas de sol. Hay que tener cuidado con no excederse con el riego, es propensa a pudrición de tallo" }),
+    new Planta({ numeroProducto: 4, categoria: "planta", especie: "gasteria", tipo: "normal", precio: 250, foto: "./fotos/rsz_1suculenta-4.jpg", descripcion: "Necesitan cuidados similares a las haworthias, lugares con luz natural pero sin sol directo" }),
+    new Planta({ numeroProducto: 5, categoria: "planta", especie: "sedum", tipo: "burrito", precio: 250, foto: "./fotos/rsz_sedumburrito.jpg", descripcion: "Hermosa suculenta colgante. Ideal para lugares iluminados con pocas horas de sol, preferentemente sol suave de la mañana o últimos de la tarde" }),
+    new Planta({ numeroProducto: 6, categoria: "planta", especie: "calathea", tipo: "triostar", precio: 350, foto: "./fotos/rsz_calatheas.jpg", descripcion: "Ideal para lugares iluminados sin sol directo" }),
+    new Planta({ numeroProducto: 7, categoria: "planta", especie: "pothus", tipo: "variegado", precio: 500, foto: "./fotos/rsz_pothos.jpg", descripcion: "Planta de interior, sin sol directo, ideal para lugares humedos como el baño" }),
+    new Planta({ numeroProducto: 8, categoria: "planta", especie: "monstera deliciosa", tipo: "normal", precio: 1200, foto: "./fotos/rsz_monstera.jpg", descripcion: "Ideal para lugares con mediasombra, como debajo de un arbol o lugar semitechado" }),
+    new Maceta({ numeroProducto: 9, categoria: "maceta", material: "plastico", color: "negra", tamaño: 8, foto: "./fotos/rsz_maceta-plastico-8-negra.jpg", precio: 50, descripcion: "Maceta de plastico de color negra. Tamaño numero 8" }),
+    new Maceta({ numeroProducto: 10, categoria: "maceta", material: "plastico", color: "negra", tamaño: 12, foto: "./fotos/rsz_maceta-plastico-negra-12.jpg", precio: 70, descripcion: "Maceta de plastico de color negra. Tamaño numero 12" }),
+    new Maceta({ numeroProducto: 11, categoria: "maceta", material: "plastico", color: "negra", tamaño: 24, foto: "./fotos/rsz_maceta-plastico-24-negra.jpg", precio: 140, descripcion: "Maceta de plastico de color negra. Tamaño numero 24" }),
+    new Maceta({ numeroProducto: 12, categoria: "maceta", material: "plastico", color: "blanco", tamaño: 8, foto: "./fotos/rsz_maceta-plastico-blanca-8.jpg", precio: 50, descripcion: "Maceta de plastico de color blanco. Tamaño numero 8" }),
+    new Maceta({ numeroProducto: 13, categoria: "maceta", material: "plastico", color: "blanco", tamaño: 12, foto: "./fotos/rsz_maceta-plastico-12.jpg", precio: 70, descripcion: "Maceta de plastico de color blanco. Tamaño numero 12" }),
+    new Maceta({ numeroProducto: 14, categoria: "maceta", material: "plastico", color: "blanco", tamaño: 24, foto: "./fotos/rsz_maceta-plastico-blanca-24.jpg", precio: 140, descripcion: "Maceta de plastico de color blanco. Tamaño numero 24" }),
+    new Maceta({ numeroProducto: 15, categoria: "maceta", material: "barro", color: "terracota", tamaño: 8, foto: "./fotos/rsz_maceta-barro-8.jpg", precio: 90, descripcion: "Maceta de barro. Tamaño numero 8" }),
+    new Maceta({ numeroProducto: 16, categoria: "maceta", material: "barro", color: "terracota", tamaño: 12, foto: "./fotos/rsz_maceta-barro-12.jpg", precio: 120, descripcion: "Maceta de barro. Tamaño numero 12" }),
+    new Maceta({ numeroProducto: 17, categoria: "maceta", material: "barro", color: "terracota", tamaño: 24, foto: "./fotos/rsz_maceta-barro-24.jpg", precio: 200, descripcion: "Maceta de barro. Tamaño numero 24" }),
 ]
 
 
@@ -158,32 +160,24 @@ function mostrarProductosCarrito(canasto) {
 }
 
 // ALMACENAR productos del carrito - STORAGE
-function almacenarProductos (){
+function almacenarProductos() {
     let jString = JSON.stringify(canasto);
     localStorage.setItem("carrito", jString);
 }
 
 // RECUPERAR productos del carrito - STORAGE
 function recuperarProductosAlmacenados() {
-    
+
     const almacenados = JSON.parse(window.localStorage.getItem("carrito"));
     productos = [];
 
     if (almacenados != null) {
         for (const productoGuardado of almacenados) {
-            if (productoGuardado.categoria == "planta") {
-                productos.push(new Planta(productoGuardado.numeroProducto, productoGuardado.categoria, productoGuardado.especie, 
-                    productoGuardado.tipo, productoGuardado.precio, productoGuardado.foto, productoGuardado.descripcion));
-            }
-            else {
-
-                productos.push(new Maceta(productoGuardado.numeroProducto, productoGuardado.categoria, productoGuardado.material, 
-                    productoGuardado.color, productoGuardado.tamaño, productoGuardado.foto, productoGuardado.precio, productoGuardado.descripcion));
-            }
+            let esPlanta = (productoGuardado.categoria == "planta");
+            productos.push(esPlanta ? new Planta(productoGuardado) : new Maceta(productoGuardado));
         }
     }
     canasto = productos;
-
 }
 
 // Generar HTMLCarrito ()
@@ -208,17 +202,25 @@ const elementoCarrito = document.getElementById("popUpCarrito");
 function hideShowProductos() {
     if (elementoCarrito.style.display == "block") {
         elementoCarrito.style.display = "none";
-    } else if(elementoCarrito.style.display = "block"){
+    }
+
+    else {
+        elementoCarrito.style.display = "block"
         mostrarSubtotalEnvio();
         mostrarProductosCarrito(canasto);
     }
+
+
 }
 
 
 function showCarrito() {
-    (elementoCarrito.style.display == "none")  ?  (elementoCarrito.style.display = "block") : (elementoCarrito.style.display = "none");
+    elementoCarrito.style.display = "block";
 }
+
+/*
 
 function eliminarProductoCarrito (){
 
 }
+*/
