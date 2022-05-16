@@ -1,4 +1,4 @@
-// CLASES PLANTAS Y MACETASif
+// CLASES PLANTAS Y MACETAS
 class Planta {
     constructor(producto) {
         this.numeroProducto = producto.numeroProducto;
@@ -61,8 +61,10 @@ let canasto = [];
 let envio = 349;
 
 
-window.onload = mostrarProductos(listaProductos);
-window.onload = recuperarProductosAlmacenados();
+window.onload = function () {
+    mostrarProductos(listaProductos);
+    recuperarProductosAlmacenados();
+}
 
 
 // FUNCION MOSTRARPRODUCTOS en tienda
@@ -91,7 +93,7 @@ function generarHTML(producto) {
     <p hidden> ${producto.numeroProducto} </p>
     <div>
     <span class="precio badge bg-dark">$${producto.precio}</span>
-    <a class="nav-link" href="#!" onclick= agregarProducto(${producto.numeroProducto})><i class="iCarrito bi bi-cart-plus"></i></a></div>
+    <a class="nav-link" href="#!" onclick= "agregarProducto(${producto.numeroProducto})"><i class="iCarrito bi bi-cart-plus"></i></a></div>
 
     </div>
     </div>
@@ -120,7 +122,7 @@ let productoAgregado = {};
 
 // funcion agregar productos a carrito - CARRITO 
 function agregarProducto(numeroProducto) {
-    productoAgregado = listaProductos.find(producto => producto.numeroProducto == numeroProducto)
+    productoAgregado = listaProductos.find(producto => producto.numeroProducto == numeroProducto);
     canasto.push(productoAgregado);
     mostrarProductosCarrito(canasto);
     mostrarSubtotalEnvio();
@@ -159,6 +161,24 @@ function mostrarProductosCarrito(canasto) {
     almacenarProductos();
 }
 
+
+// Generar HTMLCarrito ()
+function generarCardHTMLCarrito(producto) {
+    htmlCarrito = ` 
+    <li class="list-group-item animate__animated animate__fadeIn">
+    <div class="card-carrito">
+    <h5 class="card-title">${producto.titulo()}</h5>
+    <p hidden> ${producto.numeroProducto} </p>
+    <div>
+    <span class="precio badge bg-dark">$${producto.precio}</span> 
+    <a href="#!" onclick= "eliminarProductoCarrito(${producto.numeroProducto})"> <i class="iTrash bi bi-trash3"></i></a>
+    </div>
+    </div>
+    </li>`
+    return (htmlCarrito);
+}
+
+
 // ALMACENAR productos del carrito - STORAGE
 function almacenarProductos() {
     let jString = JSON.stringify(canasto);
@@ -180,23 +200,9 @@ function recuperarProductosAlmacenados() {
     canasto = productos;
 }
 
-// Generar HTMLCarrito ()
-function generarCardHTMLCarrito(producto) {
-    htmlCarrito = ` 
-    <li class="list-group-item animate__animated animate__fadeIn">
-    <div class="card-carrito">
-    <h5 class="card-title">${producto.titulo()}</h5>
-    <p hidden> ${producto.numeroProducto} </p>
-    <div>
-    <span class="precio badge bg-dark">$${producto.precio}</span> 
-    <a onClick = eliminarProductoCarrito () > <i class="iTrash bi bi-trash3"></i></a>
-    </div>
-    </div>
-    </li>`
-    return (htmlCarrito);
-}
 
 const elementoCarrito = document.getElementById("popUpCarrito");
+
 
 // funciones para mostrar y ocultar productos
 function hideShowProductos() {
@@ -205,12 +211,10 @@ function hideShowProductos() {
     }
 
     else {
-        elementoCarrito.style.display = "block"
+        elementoCarrito.style.display = "block";
         mostrarSubtotalEnvio();
         mostrarProductosCarrito(canasto);
     }
-
-
 }
 
 
@@ -218,9 +222,15 @@ function showCarrito() {
     elementoCarrito.style.display = "block";
 }
 
-/*
 
-function eliminarProductoCarrito (){
+// ELIMINAR productos de CANASTO
 
+let posicionAEliminar = 0;
+
+function eliminarProductoCarrito(numeroProducto) {
+    posicionAEliminar = canasto.findIndex(producto => producto.numeroProducto == numeroProducto);
+    canasto.splice(posicionAEliminar,1);
+    mostrarProductosCarrito(canasto);
 }
-*/
+
+
