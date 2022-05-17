@@ -72,7 +72,7 @@ function mostrarProductos(listaProductos) {
     let elementoArticulos = document.getElementById("articulos");
     elementoArticulos.innerHTML = "";
 
-    for (let i = 0; i < listaProductos.length; i++) {
+    for (let i = 0; i < listaProductos?.length; i++) {
         elementoArticulos.innerHTML += generarHTML(listaProductos[i]);
     }
 }
@@ -83,17 +83,17 @@ function generarHTML(producto) {
     html =
         `<div class="col">
     <div class="card animate__animated animate__fadeIn">
-    <div title= "${producto.titulo()}" class="cover cover-small"
-    style="background-image: url(${producto.foto})";>
+    <div title= "${producto?.titulo() ?? "[Producto inexistente]"}" class="cover cover-small"
+    style="background-image: url(${producto?.foto})";>
     </div>
     
     <div class="card-body">
-    <h5 class="card-title">${producto.titulo()}</h5>
-    <p class="card-text">${producto.descripcion}</p>
-    <p hidden> ${producto.numeroProducto} </p>
+    <h5 class="card-title">${producto?.titulo() ?? "[Producto inexistente]"}</h5>
+    <p class="card-text">${producto?.descripcion}</p>
+    <p hidden> ${producto?.numeroProducto} </p>
     <div>
-    <span class="precio badge bg-dark">$${producto.precio}</span>
-    <a class="nav-link" href="#!" onclick= "agregarProducto(${producto.numeroProducto})"><i class="iCarrito bi bi-cart-plus"></i></a></div>
+    <span class="precio badge bg-dark">$${producto?.precio}</span>
+    <a class="nav-link" href="#!" onclick= "agregarProducto(${producto?.numeroProducto})"><i class="iCarrito bi bi-cart-plus"></i></a></div>
 
     </div>
     </div>
@@ -129,26 +129,6 @@ function agregarProducto(numeroProducto) {
 }
 
 
-// funcion mostrar subtotal y costo de envio - CARRITO 
-function mostrarSubtotalEnvio() {
-    let elementoContendorSubtotalEnvio = document.getElementById("subtotalEnvio");
-    elementoContendorSubtotalEnvio.innerHTML = ` <li class="list-group-item">
-    <div class="card-carrito">
-    <p> Costo de envío: $${envio}</p>
-        <h5 class="card-title">Total con envío: $${total + envio}</h5> 
-    </div>
-    </li>`
-}
-
-function costoCarrito(canasto) {
-    total = 0;
-    for (let i = 0; i < canasto.length; i++) {
-        total += canasto[i].precio;
-    }
-    return (total);
-}
-
-
 // Funcion mostrarProductosCarrito - CARRITO 
 function mostrarProductosCarrito(canasto) {
     let elementoContenedorCarrito = document.getElementById("contenedorCarrito");
@@ -167,15 +147,35 @@ function generarCardHTMLCarrito(producto) {
     htmlCarrito = ` 
     <li class="list-group-item animate__animated animate__fadeIn">
     <div class="card-carrito">
-    <h5 class="card-title">${producto.titulo()}</h5>
-    <p hidden> ${producto.numeroProducto} </p>
+    <h5 class="card-title">${producto?.titulo() ?? "[Producto inexistente]"}</h5>
+    <p hidden> ${producto?.numeroProducto} </p>
     <div>
-    <span class="precio badge bg-dark">$${producto.precio}</span> 
-    <a href="#!" onclick= "eliminarProductoCarrito(${producto.numeroProducto})"> <i class="iTrash bi bi-trash3"></i></a>
+    <span class="precio badge bg-dark">$${producto?.precio}</span> 
+    <a href="#!" onclick= "eliminarProductoCarrito(${producto?.numeroProducto})"> <i class="iTrash bi bi-trash3"></i></a>
     </div>
     </div>
     </li>`
     return (htmlCarrito);
+}
+
+
+// funcion mostrar subtotal y costo de envio - CARRITO 
+function mostrarSubtotalEnvio() {
+    let elementoContendorSubtotalEnvio = document.getElementById("subtotalEnvio");
+    elementoContendorSubtotalEnvio.innerHTML = ` <li class="list-group-item">
+    <div class="card-carrito">
+    <p> Costo de envío: $${envio}</p>
+        <h5 class="card-title">Total con envío: $${total + envio}</h5> 
+    </div>
+    </li>`
+}
+
+function costoCarrito(canasto) {
+    total = 0;
+    for (let i = 0; i < canasto.length; i++) {
+        total += canasto[i].precio;
+    }
+    return (total);
 }
 
 
@@ -206,7 +206,7 @@ const elementoCarrito = document.getElementById("popUpCarrito");
 
 // funciones para mostrar y ocultar productos
 function hideShowProductos() {
-    if (elementoCarrito.style.display == "block") {
+    if (elementoCarrito?.style.display == "block" ?? "Error en elementoCarrito.style.display") {
         elementoCarrito.style.display = "none";
     }
 
@@ -231,6 +231,8 @@ function eliminarProductoCarrito(numeroProducto) {
     posicionAEliminar = canasto.findIndex(producto => producto.numeroProducto == numeroProducto);
     canasto.splice(posicionAEliminar,1);
     mostrarProductosCarrito(canasto);
+    costoCarrito(canasto);
+    mostrarSubtotalEnvio();
+    showCarrito();
 }
-
 
