@@ -110,6 +110,17 @@
         </div>
     </section>
 
+    <!-- MERCADOPAGO  -->
+
+
+    <div class="cho-container"></div>
+    <form action="/procesar-pago" method="POST">
+        <script src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
+         data-preference-id="$$id$$">
+        </script>
+      </form>
+
+    <script src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js" data-preference-id="{{{payId}}}" ></script>
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="tienda-online.js"></script>
 

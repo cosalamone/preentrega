@@ -139,6 +139,7 @@ function mostrarProductosCarrito(canasto) {
     costoCarrito(canasto);
     showCarrito();
     almacenarProductos();
+
 }
 
 
@@ -168,6 +169,7 @@ function mostrarSubtotalEnvio() {
         <h5 class="card-title">Total con envío: $${total + envio}</h5> 
     </div>
     </li>`
+
 }
 
 function costoCarrito(canasto) {
@@ -176,6 +178,7 @@ function costoCarrito(canasto) {
         total += canasto[i].precio;
     }
     return (total);
+
 }
 
 
@@ -229,10 +232,51 @@ let posicionAEliminar = 0;
 
 function eliminarProductoCarrito(numeroProducto) {
     posicionAEliminar = canasto.findIndex(producto => producto.numeroProducto == numeroProducto);
-    canasto.splice(posicionAEliminar,1);
+    canasto.splice(posicionAEliminar, 1);
     mostrarProductosCarrito(canasto);
     costoCarrito(canasto);
     mostrarSubtotalEnvio();
     showCarrito();
 }
 
+// MERCADOPAGO
+
+const mp = new MercadoPago('TEST-14b726e0-811d-4ca1-ae2d-a2abd12469e8', {
+    locale: 'es-AR',
+    advancedFraudPrevention: true,
+})
+
+const checkout = mp.checkout({
+    preference: {
+        id: 'YOUR_PREFERENCE_ID'
+    }
+});
+
+checkout.render({
+    container: '.cho-container',
+    label: 'Pagá'
+});
+
+/* USUARIO Y CONTRASEÑA TESTER MERCADOPAGO 
+
+VENDEDOR
+{
+    "id":1125631595,
+    "nickname":"TETE1339984",
+    "password":"qatest1358",
+    "site_status":"active",
+    "email":"test_user_15779256@testuser.com"
+}
+
+COMPRADOR
+{
+    "id":1125946529,
+    "nickname":"TETE2680187",
+    "password":"qatest9173",
+    "site_status":"active",
+    "email":"test_user_22716842@testuser.com"
+}
+
+
+
+*/
