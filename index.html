@@ -40,24 +40,24 @@
                 </li>
             </ul>
         </nav>
-    <!-- CARRITO DE COMPRAS  -->
+        <!-- CARRITO DE COMPRAS  -->
 
-    <section id="popUpCarrito" style="display: none;" class="carritoCompras">
-        <div class="card animate__animated animate__fadeIn" style="width: 18rem">
+        <section id="popUpCarrito" style="display: none;" class="carritoCompras">
+            <div class="card animate__animated animate__fadeIn" style="width: 18rem">
 
-            <ul class="list-group list-group-flush" id="contenedorCarrito">
-                
-            
-            </ul>
+                <ul class="list-group list-group-flush" id="contenedorCarrito">
 
-            <ul class="list-group list-group-flush"  id="subtotalEnvio">
-                
-            
-            </ul>
 
-           
-        </div>
-    </section>
+                </ul>
+
+                <ul class="list-group list-group-flush" id="subtotalEnvio">
+
+
+                </ul>
+
+
+            </div>
+        </section>
 
 
         <!-- PORTADA  -->
@@ -112,15 +112,10 @@
 
     <!-- MERCADOPAGO  -->
 
-
+<section>
     <div class="cho-container"></div>
-    <form action="/procesar-pago" method="POST">
-        <script src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
-         data-preference-id="$$id$$">
-        </script>
-      </form>
+</section>
 
-    <script src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js" data-preference-id="{{{payId}}}" ></script>
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="tienda-online.js"></script>
 
