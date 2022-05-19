@@ -248,14 +248,11 @@ const mp = new MercadoPago('TEST-14b726e0-811d-4ca1-ae2d-a2abd12469e8', {
 
 const checkout = mp.checkout({
     preference: {
-        id: 'YOUR_PREFERENCE_ID'
+        id: '3790521406371018'
     }
 });
 
-checkout.render({
-    container: '.cho-container',
-    label: 'Pagá'
-});
+
 
 /* USUARIO Y CONTRASEÑA TESTER MERCADOPAGO 
 
@@ -277,6 +274,105 @@ COMPRADOR
     "email":"test_user_22716842@testuser.com"
 }
 
+comprador 2
+{
+    "id": 1126244773,
+    "nickname": "TEST3H6WKZN6",
+    "password": "qatest3419",
+    "site_status": "active",
+    "email": "test_user_95982254@testuser.com"
+}
 
 
 */
+
+//ESTO HAY QUE HACERLO EN EL ONLOAD, CUANDO SE CARGUE LA PAGINA REVISAR SI ES UN REENVIO DESDE MP -- PENDIENTE TERMINAR 
+let searchParams = new URLSearchParams(window.location.search)
+searchParams.has('status') // true
+let param = searchParams.get('status')
+
+
+// funcion que simula backend, ya que el acces token del vendedor deberia ir ahi, porque en el frontend está expuesto
+function pagarConMercadoPago(canasto) {
+
+    let myHeaders = new Headers();
+    const ACCESS_TOKEN_VENDEDOR = "APP_USR-8855633324297819-051818-59fc62a2c58d61b5151a92d54660062e-1125631595";
+    myHeaders.append("Authorization", `Bearer ${ACCESS_TOKEN_VENDEDOR}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    let items = canasto.map(producto => {
+        return {
+            id: producto.numeroProducto,
+            title: producto.titulo,
+            currency_id: "ARS",
+            picture_url: producto.foto,
+            desription: producto.descripcion,
+            category_id: "art",
+            quantity: 1,
+            unit_price: producto.precio,
+        }
+    })
+
+    let raw = JSON.stringify(
+        {
+
+            items: items,
+
+            payer: {
+                name: "",
+                surname: "",
+                email: "",
+                phone: {
+                    area_code: "",
+                    number: ""
+                },
+                identification: {
+                    type: "",
+                    number: ""
+                },
+                address: {
+                    street_name: "",
+                    street_number: 0,
+                    zip_code: ""
+                }
+            },
+            back_urls: {
+                success: "https://cosalamone.github.io/tienda-sucuhome",
+                failure: "https://cosalamone.github.io/tienda-sucuhome",
+                pending: "https://cosalamone.github.io/tienda-sucuhome"
+            },
+            auto_return: "approved",
+            payment_methods: {
+                installments: 6
+            },
+            notification_url: "www.URL-WEBHOOK-FALSA-PORQUE-NO-TENGO-BACKEND.com",
+            statement_descriptor: "Tienda sucuhome",
+            external_reference: "mlplesoj9b"
+        });
+
+    let requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+
+    fetch("https://api.mercadopago.com/checkout/preferences", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            //ACA LLEGA COMO TEXTO ENTRE OTRAS COSAS LA URL DE PAGO A LA QUE REDIRECCIONO AL USUARIO.
+            console.log(result)
+            let resultParseado = JSON.parse(result)
+            console.log(resultParseado)
+
+            let linkPago = resultParseado.init_point
+            location.href = linkPago;
+        })
+        .catch(error => console.log('error', error));
+
+
+
+}
+
+
