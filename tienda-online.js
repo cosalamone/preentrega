@@ -370,9 +370,6 @@ function pagarConMercadoPago(canasto) {
             location.href = linkPago;
         })
         .catch(error => console.log('error', error));
-
-
-
 }
 
 
