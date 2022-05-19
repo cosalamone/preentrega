@@ -62,6 +62,11 @@ let envio = 349;
 
 
 window.onload = function () {
+    //ESTO HAY QUE HACERLO EN EL ONLOAD, CUANDO SE CARGUE LA PAGINA REVISAR SI ES UN REENVIO DESDE MP -- PENDIENTE TERMINAR 
+    let searchParams = new URLSearchParams(window.location.search)
+    searchParams.has('status') // true
+    let param = searchParams.get('status')
+
     mostrarProductos(listaProductos);
     recuperarProductosAlmacenados();
 }
@@ -283,13 +288,20 @@ comprador 2
     "email": "test_user_95982254@testuser.com"
 }
 
+TARJETAS DE PRUEBA
 
+mastercard	5031 7557 3453 0604	123	25/11
+Visado	4509 9535 6623 3704	123	25/11
+Expreso americano	3711 803032 57522	1234	25/11
+
+
+DATOS NECESARIOS PARA GESTIONAR PAGO CON COMPRADOR TESTER 1:
+NOMBRE DEL TITUAR: APRO (PARA QUE EL PAGO SE MUESTRE APROBADO), OTHE (RECHAZADO POR ERROR GENERAL), ENTRE OTROS
+DNI TITULAR: 01111111
+MAIL: test_user_22716842@testuser.com
 */
 
-//ESTO HAY QUE HACERLO EN EL ONLOAD, CUANDO SE CARGUE LA PAGINA REVISAR SI ES UN REENVIO DESDE MP -- PENDIENTE TERMINAR 
-let searchParams = new URLSearchParams(window.location.search)
-searchParams.has('status') // true
-let param = searchParams.get('status')
+
 
 
 // funcion que simula backend, ya que el acces token del vendedor deberia ir ahi, porque en el frontend está expuesto
@@ -361,7 +373,7 @@ function pagarConMercadoPago(canasto) {
     fetch("https://api.mercadopago.com/checkout/preferences", requestOptions)
         .then(response => response.text())
         .then(result => {
-            //ACA LLEGA COMO TEXTO ENTRE OTRAS COSAS LA URL DE PAGO A LA QUE REDIRECCIONO AL USUARIO.
+            //ACA LLEGA COMO STRING, ENTRE OTRAS COSAS, LA URL DE PAGO A LA QUE REDIRECCIONO AL USUARIO.
             console.log(result)
             let resultParseado = JSON.parse(result)
             console.log(resultParseado)
@@ -371,5 +383,6 @@ function pagarConMercadoPago(canasto) {
         })
         .catch(error => console.log('error', error));
 }
+
 
 
