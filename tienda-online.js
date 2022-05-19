@@ -63,17 +63,32 @@ let envio = 349;
 
 window.onload = function () {
     //ESTO HAY QUE HACERLO EN EL ONLOAD, CUANDO SE CARGUE LA PAGINA REVISAR SI ES UN REENVIO DESDE MP -- PENDIENTE TERMINAR 
-    let searchParams = new URLSearchParams(window.location.search)
+
+
+  let searchParams = new URLSearchParams(window.location.search)
     searchParams.has('status') // true
     let param = searchParams.get('status')
 
-    if (param == 'approved') {
-        alert("Su compra se realizó con éxito. En los proximos 2 días hábiles podrá retirar su producto en Av. Siempreviva 742")
-    } else (param == "OTHE" || param == "CONT" ||  param == "CALL" || param == "FUND" || param == "SECU" || param == "EXPI" || param == "  FORM")
-    {alert ("Hubo un error al momento del pago y no pudo registrarse su compra")}
+    if (param != null && param != undefined) {
 
-    mostrarProductos(listaProductos);
-    recuperarProductosAlmacenados();
+            if (param == 'approved') {
+            Swal.fire({
+                title: 'Compra realizada!',
+                text: 'Su compra se realizó con éxito. En los proximos 2 días hábiles podrá retirar su producto en Av. Siempreviva 742',
+                icon: 'success',
+                confirmButtonText: 'Regresar a Sucu.home'
+            })
+        } else
+            Swal.fire({
+                title: 'Error!',
+                text: 'Hubo un error al momento del pago y no pudo registrarse su compra',
+                icon: 'error',
+                confirmButtonText: 'Regresar a Sucu.home'
+            })
+    }
+
+mostrarProductos(listaProductos);
+recuperarProductosAlmacenados();
 }
 
 
@@ -182,6 +197,7 @@ function mostrarSubtotalEnvio() {
 
 }
 
+
 function costoCarrito(canasto) {
     total = 0;
     for (let i = 0; i < canasto.length; i++) {
@@ -201,7 +217,7 @@ function almacenarProductos() {
 // RECUPERAR productos del carrito - STORAGE
 function recuperarProductosAlmacenados() {
 
-    const almacenados = JSON.parse(window.localStorage.getItem("carrito"));
+    const almacenados = JSON.parse(window.localStorage.getItem("carrito")) || [];
     productos = [];
 
     if (almacenados != null) {
@@ -225,6 +241,7 @@ function hideShowProductos() {
 
     else {
         elementoCarrito.style.display = "block";
+        costoCarrito(canasto)
         mostrarSubtotalEnvio();
         mostrarProductosCarrito(canasto);
     }
@@ -262,49 +279,11 @@ const checkout = mp.checkout({
     }
 });
 
+checkout.render({
+    container: '.cho-container',
+    label: 'Pagá',
 
-
-/* USUARIO Y CONTRASEÑA TESTER MERCADOPAGO 
-
-VENDEDOR
-{
-    "id":1125631595,
-    "nickname":"TETE1339984",
-    "password":"qatest1358",
-    "site_status":"active",
-    "email":"test_user_15779256@testuser.com"
-}
-
-COMPRADOR
-{
-    "id":1125946529,
-    "nickname":"TETE2680187",
-    "password":"qatest9173",
-    "site_status":"active",
-    "email":"test_user_22716842@testuser.com"
-}
-
-comprador 2
-{
-    "id": 1126244773,
-    "nickname": "TEST3H6WKZN6",
-    "password": "qatest3419",
-    "site_status": "active",
-    "email": "test_user_95982254@testuser.com"
-}
-
-TARJETAS DE PRUEBA
-
-mastercard	5031 7557 3453 0604	123	25/11
-Visado	4509 9535 6623 3704	123	25/11
-Expreso americano	3711 803032 57522	1234	25/11
-
-
-DATOS NECESARIOS PARA GESTIONAR PAGO CON COMPRADOR TESTER 1:
-NOMBRE DEL TITUAR: APRO (PARA QUE EL PAGO SE MUESTRE APROBADO), OTHE (RECHAZADO POR ERROR GENERAL), ENTRE OTROS
-DNI TITULAR: 01111111
-MAIL: test_user_22716842@testuser.com
-*/
+});
 
 
 
@@ -332,7 +311,6 @@ function pagarConMercadoPago(canasto) {
 
     let raw = JSON.stringify(
         {
-
             items: items,
 
             payer: {

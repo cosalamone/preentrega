@@ -79,6 +79,8 @@ h1,h2,h3,h4,h5,h6 {
     z-index: 9999;
 }
 
+
+
 .sticky {
   position: fixed;
   top: 0;
@@ -115,4 +117,15 @@ h1,h2,h3,h4,h5,h6 {
     top: 70px;
     z-index: 9999;
     box-shadow: 5px 5px 10px 2px rgba(37, 37, 37, 0.8);
+}
+
+.choi-container{
+    background-color:#009ee3;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    width: 55px;
 }
