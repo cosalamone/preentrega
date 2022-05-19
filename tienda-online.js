@@ -67,6 +67,10 @@ window.onload = function () {
     searchParams.has('status') // true
     let param = searchParams.get('status')
 
+    if (param == 'approved') {
+        alert("Su compra se realizó con éxito. En los proximos 2 días hábiles podrá retirar su producto en Av. Siempreviva 742")
+    } else {alert ("Hubo un error al momento del pago y no pudo registrarse su compra")}
+
     mostrarProductos(listaProductos);
     recuperarProductosAlmacenados();
 }
