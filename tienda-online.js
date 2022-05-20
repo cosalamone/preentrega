@@ -76,6 +76,7 @@ window.onload = function () {
                 title: 'Compra realizada!',
                 text: 'Su compra se realizó con éxito. En los proximos 2 días hábiles podrá retirar su producto en Av. Siempreviva 742',
                 icon: 'success',
+                confirmButtonColor: '#b5df93',
                 confirmButtonText: 'Regresar a Sucu.home'
             })
         } else
