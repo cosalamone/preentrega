@@ -108,12 +108,12 @@ function generarHTML(producto) {
     html =
         `<div class="col">
     <div class="card animate__animated animate__fadeIn">
-    <div title= "${producto?.titulo() ?? "[Producto inexistente]"}" class="cover cover-small"
+    <div title= "${producto?.titulo() || "[Producto inexistente]"}" class="cover cover-small"
     style="background-image: url(${producto?.foto})";>
     </div>
     
     <div class="card-body">
-    <h5 class="card-title">${producto?.titulo() ?? "[Producto inexistente]"}</h5>
+    <h5 class="card-title">${producto?.titulo() || "[Producto inexistente]"}</h5>
     <p class="card-text">${producto?.descripcion}</p>
     <p hidden> ${producto?.numeroProducto} </p>
     <div>
@@ -173,7 +173,7 @@ function generarCardHTMLCarrito(producto) {
     htmlCarrito = ` 
     <li class="list-group-item animate__animated animate__fadeIn">
     <div class="card-carrito">
-    <h5 class="card-title">${producto?.titulo() ?? "[Producto inexistente]"}</h5>
+    <h5 class="card-title">${producto?.titulo() || "[Producto inexistente]"}</h5>
     <p hidden> ${producto?.numeroProducto} </p>
     <div>
     <span class="precio badge bg-dark">$${producto?.precio}</span> 
@@ -235,7 +235,7 @@ const elementoCarrito = document.getElementById("popUpCarrito");
 
 // funciones para mostrar y ocultar productos
 function hideShowProductos() {
-    if (elementoCarrito?.style.display == "block" ?? "Error en elementoCarrito.style.display") {
+    if (elementoCarrito?.style.display == "block" || "Error en elementoCarrito.style.display") {
         elementoCarrito.style.display = "none";
     }
 
