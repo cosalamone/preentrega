@@ -355,9 +355,7 @@ function pagarConMercadoPago(canasto) {
 
     fetch("https://api.mercadopago.com/checkout/preferences", requestOptions)
         .then(response => response.text())
-        .then(result => {
-            //ACA LLEGA COMO STRING, ENTRE OTRAS COSAS, LA URL DE PAGO A LA QUE REDIRECCIONO AL USUARIO.
-            console.log(result)
+        .then(result => {console.log(result) //ACA LLEGA COMO STRING LA URL DE PAGO A LA QUE REDIRECCIONO AL USUARIO, ENTRE OTRAS COSAS.
             let resultParseado = JSON.parse(result)
             console.log(resultParseado)
 
