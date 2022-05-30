@@ -65,13 +65,13 @@ window.onload = function () {
     //ESTO HAY QUE HACERLO EN EL ONLOAD, CUANDO SE CARGUE LA PAGINA REVISAR SI ES UN REENVIO DESDE MP -- PENDIENTE TERMINAR 
 
 
-  let searchParams = new URLSearchParams(window.location.search)
+    let searchParams = new URLSearchParams(window.location.search)
     searchParams.has('status') // true
     let param = searchParams.get('status')
 
     if (param != null && param != undefined) {
 
-            if (param == 'approved') {
+        if (param == 'approved') {
             Swal.fire({
                 title: 'Compra realizada!',
                 text: 'Su compra se realizó con éxito. En los proximos 2 días hábiles podrá retirar su producto en Av. Siempreviva 742',
@@ -87,8 +87,8 @@ window.onload = function () {
             })
     }
 
-mostrarProductos(listaProductos);
-recuperarProductosAlmacenados();
+    mostrarProductos(listaProductos);
+    recuperarProductosAlmacenados();
 }
 
 
@@ -331,6 +331,11 @@ function pagarConMercadoPago(canasto) {
                     zip_code: ""
                 }
             },
+
+            shipments: {
+                "cost":  349,
+                "mode": "not_specified",
+            },
             back_urls: {
                 success: "https://cosalamone.github.io/tienda-sucuhome",
                 failure: "https://cosalamone.github.io/tienda-sucuhome",
@@ -355,7 +360,8 @@ function pagarConMercadoPago(canasto) {
 
     fetch("https://api.mercadopago.com/checkout/preferences", requestOptions)
         .then(response => response.text())
-        .then(result => {console.log(result) //ACA LLEGA COMO STRING LA URL DE PAGO A LA QUE REDIRECCIONO AL USUARIO, ENTRE OTRAS COSAS.
+        .then(result => {
+            console.log(result) //ACA LLEGA COMO STRING LA URL DE PAGO A LA QUE REDIRECCIONO AL USUARIO, ENTRE OTRAS COSAS.
             let resultParseado = JSON.parse(result)
             console.log(resultParseado)
 
