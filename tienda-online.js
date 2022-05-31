@@ -62,7 +62,7 @@ let envio = 349;
 
 
 window.onload = function () {
-    //ESTO HAY QUE HACERLO EN EL ONLOAD, CUANDO SE CARGUE LA PAGINA REVISAR SI ES UN REENVIO DESDE MP -- PENDIENTE TERMINAR 
+    //ESTO SE HACE EN EL ONLOAD, CUANDO SE CARGUA LA PAGINA REVISA SI ES UN REENVIO DESDE MP -
 
 
     let searchParams = new URLSearchParams(window.location.search)
@@ -215,7 +215,47 @@ function almacenarProductos() {
 }
 
 // RECUPERAR productos del carrito - STORAGE
+
+
+let productos = [];
+
+
+
+function getProductosStorageAsync() {
+    return new Promise((resolve, reject) => {
+
+        const almacenados = JSON.parse(window.localStorage.getItem("carrito")) || [];
+
+        if (almacenados != null) {
+
+            for (const productoGuardado of almacenados) {
+                let esPlanta = (productoGuardado.categoria == "planta");
+                productos.push(esPlanta ? new Planta(productoGuardado) : new Maceta(productoGuardado));
+            }
+            resolve(productos);
+        } else {
+            let storageVacio = "No hay productos guardados en el carrito de compras";
+            reject(storageVacio);
+        }
+
+    });
+
+}
+
+
+
 function recuperarProductosAlmacenados() {
+
+    getProductosStorageAsync();
+    canasto = productos;
+}
+
+
+myPromise.then()
+
+/* ORIGINAL 
+function recuperarProductosAlmacenados() {
+    
 
     const almacenados = JSON.parse(window.localStorage.getItem("carrito")) || [];
     productos = [];
@@ -228,14 +268,14 @@ function recuperarProductosAlmacenados() {
     }
     canasto = productos;
 }
-
+*/
 
 const elementoCarrito = document.getElementById("popUpCarrito");
 
 
 // funciones para mostrar y ocultar productos
 function hideShowProductos() {
-    if (elementoCarrito?.style.display == "block" || "Error en elementoCarrito.style.display") {
+    if (elementoCarrito.style.display == "block") {
         elementoCarrito.style.display = "none";
     }
 
@@ -276,14 +316,10 @@ const mp = new MercadoPago('TEST-14b726e0-811d-4ca1-ae2d-a2abd12469e8', {
 const checkout = mp.checkout({
     preference: {
         id: '3790521406371018'
-    }
+    },
 });
 
-checkout.render({
-    container: '.cho-container',
-    label: 'Pagá',
 
-});
 
 
 
@@ -333,7 +369,7 @@ function pagarConMercadoPago(canasto) {
             },
 
             shipments: {
-                "cost":  349,
+                "cost": 349,
                 "mode": "not_specified",
             },
             back_urls: {
@@ -347,7 +383,9 @@ function pagarConMercadoPago(canasto) {
             },
             notification_url: "www.URL-WEBHOOK-FALSA-PORQUE-NO-TENGO-BACKEND.com",
             statement_descriptor: "Tienda sucuhome",
-            external_reference: "mlplesoj9b"
+            external_reference: "mlplesoj9b",
+
+
         });
 
     let requestOptions = {
