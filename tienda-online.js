@@ -120,6 +120,11 @@ function generarHTML(producto) {
     <span class="precio badge bg-dark">$${producto?.precio}</span>
     <a class="nav-link" href="#!" onclick= "agregarProducto(${producto?.numeroProducto})"><i class="iCarrito bi bi-cart-plus"></i></a></div>
 
+    <div class="counter">
+    <span class="down" onClick='decreaseCount(event, this)'>-</span>
+    <input type="text" value="1">
+    <span class="up"  onClick='increaseCount(event, this)'>+</span>
+    </div>
     </div>
     </div>
     </div> `
@@ -144,6 +149,24 @@ botonCarrito.onclick = () => hideShowProductos();
 
 let total = 0;
 let productoAgregado = {};
+
+
+function increaseCount(a, b) {
+    var input = b.previousElementSibling;
+    var value = parseInt(input.value, 10); 
+    value = isNaN(value)? 0 : value;
+    value ++;
+    input.value = value;
+  }
+  function decreaseCount(a, b) {
+    var input = b.nextElementSibling;
+    var value = parseInt(input.value, 10); 
+    if (value > 1) {
+      value = isNaN(value)? 0 : value;
+      value --;
+      input.value = value;
+    }
+  }
 
 // funcion agregar productos a carrito - CARRITO 
 function agregarProducto(numeroProducto) {
@@ -216,13 +239,18 @@ function almacenarProductos() {
 
 // RECUPERAR productos del carrito - STORAGE
 
+function recuperarProductosAlmacenados() {
+
+    getProductosStorageAsync();
+    canasto = productos;
+}
+
 
 let productos = [];
 
 
-
 function getProductosStorageAsync() {
-    return new Promise((resolve, reject) => {
+    let myPromise=  new Promise((resolve, reject) => {
 
         const almacenados = JSON.parse(window.localStorage.getItem("carrito")) || [];
 
@@ -237,21 +265,14 @@ function getProductosStorageAsync() {
             let storageVacio = "No hay productos guardados en el carrito de compras";
             reject(storageVacio);
         }
-
     });
 
+    return myPromise;
 }
 
+getProductosStorageAsync().then( (response) => console.log (response))
+.catch(error=> console.log(error, "error"));
 
-
-function recuperarProductosAlmacenados() {
-
-    getProductosStorageAsync();
-    canasto = productos;
-}
-
-
-myPromise.then()
 
 /* ORIGINAL 
 function recuperarProductosAlmacenados() {
