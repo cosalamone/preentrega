@@ -32,7 +32,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .card-title{
-    min-height: 2.5rem;
+    min-height: 2rem;
 }
 
 .card-text{
@@ -79,24 +79,21 @@ h1,h2,h3,h4,h5,h6 {
     z-index: 9999;
 }
 
-
-
 .sticky {
   position: fixed;
   top: 0;
   width: 100%;
 }
 
-
-
 .iCart{
     font-size: 18px;
-    
 }
 
 .iCarrito{
     float: right;
     font-size: 25px;
+    color: rgb(124, 161, 93);
+
 }
 
 .precio{
@@ -117,6 +114,8 @@ h1,h2,h3,h4,h5,h6 {
     top: 70px;
     z-index: 9999;
     box-shadow: 5px 5px 10px 2px rgba(37, 37, 37, 0.8);
+    
+    
 }
 
 .choi-container{
@@ -130,7 +129,6 @@ h1,h2,h3,h4,h5,h6 {
     width: 55px;
 }
 
-
 .counter {
     width: 150px;
     margin: auto;
@@ -138,22 +136,24 @@ h1,h2,h3,h4,h5,h6 {
     align-items: center;
     justify-content: center;
 }
+
 .counter input {
     width: 50px;
     border: 0;
     line-height: 30px;
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
-    background: rgb(149, 194, 112);
+    background: rgb(124, 161, 93);
     color: #fff;
     appearance: none;
     outline: 0;
 }
+
 .counter span {
     display: block;
-    font-size: 25px;
+    font-size: 20px;
     padding: 0 10px;
     cursor: pointer;
-    color: rgb(149, 194, 112);
+    color:  rgb(124, 161, 93);
     user-select: none;
 }

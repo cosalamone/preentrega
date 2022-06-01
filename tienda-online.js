@@ -105,29 +105,32 @@ function mostrarProductos(listaProductos) {
 
 // FUNCION GENERARHTML para la tienda 
 function generarHTML(producto) {
-    html =
-        `<div class="col">
-    <div class="card animate__animated animate__fadeIn">
-    <div title= "${producto?.titulo() || "[Producto inexistente]"}" class="cover cover-small"
-    style="background-image: url(${producto?.foto})";>
-    </div>
-    
-    <div class="card-body">
-    <h5 class="card-title">${producto?.titulo() || "[Producto inexistente]"}</h5>
-    <p class="card-text">${producto?.descripcion}</p>
-    <p hidden> ${producto?.numeroProducto} </p>
-    <div>
-    <span class="precio badge bg-dark">$${producto?.precio}</span>
-    <a class="nav-link" href="#!" onclick= "agregarProducto(${producto?.numeroProducto})"><i class="iCarrito bi bi-cart-plus"></i></a></div>
+    html =` 
+    <div class="col">
+        <div class="card animate__animated animate__fadeIn">
+            <div title="${producto?.titulo() || " [Producto inexistente]"}" class="cover cover-small"
+                style="background-image: url(${producto?.foto})" ;>
+            </div>
 
-    <div class="counter">
-    <span class="down" onClick='decreaseCount(event, this)'>-</span>
-    <input type="text" value="1">
-    <span class="up"  onClick='increaseCount(event, this)'>+</span>
-    </div>
-    </div>
-    </div>
-    </div> `
+            <div class="card-body">
+                <h5 class="card-title">${producto?.titulo() || "[Producto inexistente]"}</h5>
+                <p class="card-text">${producto?.descripcion}</p>
+                <p hidden> ${producto?.numeroProducto} </p>
+                
+                <div>
+                    <div class="precio badge bg-dark">$${producto?.precio}</div>
+                    <a class="nav-link" href="#!" onclick="agregarProducto(${producto?.numeroProducto})">
+                        <i class="iCarrito bi bi-cart-plus"></i></a>
+                </div>
+
+                <div class="counter">
+                    <span class="down" onClick="decreaseCount(event, this)">-</span>
+                    <input type="text" value="1">
+                    <span class="up" onClick="increaseCount(event, this)">+</span>
+                </div>
+            </div>
+        </div>
+    </div>`
 
     return (html);
 }
@@ -197,9 +200,10 @@ function generarCardHTMLCarrito(producto) {
     <li class="list-group-item animate__animated animate__fadeIn">
     <div class="card-carrito">
     <h5 class="card-title">${producto?.titulo() || "[Producto inexistente]"}</h5>
+    <p> Cantidad: </p>
     <p hidden> ${producto?.numeroProducto} </p>
     <div>
-    <span class="precio badge bg-dark">$${producto?.precio}</span> 
+    <span class="precio badge bg-dark">$${producto?.precio}</span>  
     <a href="#!" onclick= "eliminarProductoCarrito(${producto?.numeroProducto})"> <i class="iTrash bi bi-trash3"></i></a>
     </div>
     </div>
@@ -238,22 +242,18 @@ function almacenarProductos() {
 }
 
 // RECUPERAR productos del carrito - STORAGE
-
+let productos = [];
 function recuperarProductosAlmacenados() {
-
     getProductosStorageAsync();
     canasto = productos;
 }
-
-
-let productos = [];
 
 
 function getProductosStorageAsync() {
     let myPromise=  new Promise((resolve, reject) => {
 
         const almacenados = JSON.parse(window.localStorage.getItem("carrito")) || [];
-
+        productos = [];
         if (almacenados != null) {
 
             for (const productoGuardado of almacenados) {
