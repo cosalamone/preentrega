@@ -342,9 +342,6 @@ const checkout = mp.checkout({
 
 
 
-
-
-
 // funcion que simula backend, ya que el acces token del vendedor deberia ir ahi, porque en el frontend está expuesto
 function pagarConMercadoPago(canasto) {
 

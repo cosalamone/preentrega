@@ -52,6 +52,14 @@ h1,h2,h3,h4,h5,h6 {
 .mr-0{
     margin-right: 0 !important;
 }
+
+.tituloCarrito {
+    margin-top: 1rem;
+    min-height: 2rem;
+    text-align: center;
+    color: rgb(90, 107, 76);
+}
+
 .tienda {
     position: relative;
 }
@@ -156,4 +164,11 @@ h1,h2,h3,h4,h5,h6 {
     cursor: pointer;
     color:  rgb(124, 161, 93);
     user-select: none;
+}
+
+.buttonVaciarCarrito{
+    border: 0;
+    font-size: 12px;
+    background: rgb(90, 107, 76);
+    color: #fff;
 }
