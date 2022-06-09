@@ -232,7 +232,7 @@ function generarCardHTMLCarrito(itemCarrito) {
     <p> Cantidad: ${itemCarrito.cantidad} </p>
     <p hidden> ${itemCarrito.MacetaOPlanta.numeroProducto} </p>
     <div>
-    <span class="precio badge bg-dark">$${itemCarrito?.MacetaOPlanta.precio}</span>  
+    <span class="precio badge bg-dark">$${(itemCarrito?.MacetaOPlanta.precio * itemCarrito.cantidad)}</span>  
     <a href="#!" onclick= "eliminarProductoCarrito(${itemCarrito.MacetaOPlanta.numeroProducto})"> <i class="iTrash bi bi-trash3"></i></a>
     </div>
     </div>
@@ -259,7 +259,7 @@ function mostrarSubtotalEnvio() {
 function costoCarrito(canasto) {
     total = 0;
     for (let i = 0; i < canasto.length; i++) {
-        total += canasto[i].MacetaOPlanta.precio;
+        total += (canasto[i].MacetaOPlanta.precio * canasto[i].cantidad);
     }
     return (total);
 
