@@ -32,7 +32,6 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Contacto</a>
                 </li>
-                </li>
             </ul>
 
             <ul class="nav">
@@ -41,9 +40,6 @@
                 </li>
             </ul>
 
-            <!-- MERCADOPAGO  -->
-            <button onclick="pagarConMercadoPago(canasto)" class="choi-container">Pagá</button>
-
         </nav>
 
         <!-- CARRITO DE COMPRAS  -->
@@ -51,19 +47,14 @@
             <div class="card animate__animated animate__fadeIn" style="width: 18rem">
                 <h4 class="tituloCarrito">Tu carrito de compras</h4>
                 <ul class="list-group list-group-flush" id="contenedorCarrito">
-                    
-
 
                 </ul>
 
                 <ul class="list-group list-group-flush" id="subtotalEnvio">
 
-
                 </ul>
-                <button class="buttonVaciarCarrito">Vaciá tu carrito</button>
+                <button class="buttonVaciarCarrito" onclick="vaciarCarritoCompra(canasto)">Vaciá tu carrito</button>
                 
-
-
             </div>
         </section>
 
@@ -89,7 +80,7 @@
     <nav id="navbar-example3 "
         class=" mt-4 d-flex navbar navbar-light bg-light flex-column align-items-stretch p-3 navbartienda">
 
-        <a class="navbar-brand" href="#" onclick="mostrarProductos(listaProductos)">Tienda</a>
+        <a class="navbar-brand" href="#" onclick="mostrarProductos(listaProductos)">Productos:</a>
 
         <nav class="nav hidden-xsnav-pills flex-column">
 

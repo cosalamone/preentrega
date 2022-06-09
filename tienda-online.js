@@ -33,6 +33,15 @@ class Maceta {
     }
 }
 
+// CLASE PARA AGREGAR AL CARRITO
+class ItemCarrito {
+    constructor(MacetaOPlanta, cantidad) {
+        this.MacetaOPlanta = MacetaOPlanta;
+        this.cantidad = cantidad;
+    }
+
+}
+
 
 // ARRAY DE PRODUCTOS 
 let listaProductos = [
@@ -88,7 +97,7 @@ window.onload = function () {
     }
 
     mostrarProductos(listaProductos);
-    recuperarProductosAlmacenados();
+   // recuperarProductosAlmacenados();
 }
 
 
@@ -105,7 +114,7 @@ function mostrarProductos(listaProductos) {
 
 // FUNCION GENERARHTML para la tienda 
 function generarHTML(producto) {
-    html =` 
+    html = ` 
     <div class="col">
         <div class="card animate__animated animate__fadeIn">
             <div title="${producto?.titulo() || " [Producto inexistente]"}" class="cover cover-small"
@@ -125,7 +134,7 @@ function generarHTML(producto) {
 
                 <div class="counter">
                     <span class="down" onClick="decreaseCount(event, this)">-</span>
-                    <input type="text" value="1">
+                    <input type="text" id="${producto?.numeroProducto}" value="1">
                     <span class="up" onClick="increaseCount(event, this)">+</span>
                 </div>
             </div>
@@ -150,31 +159,52 @@ let botonCarrito = document.getElementById("iconoCarrito");
 botonCarrito.onclick = () => hideShowProductos();
 
 
-let total = 0;
-let productoAgregado = {};
-
-
-function increaseCount(a, b) {
+// counter de productos para el CARRITO
+function increaseCount(a, b) { // a event?
     var input = b.previousElementSibling;
-    var value = parseInt(input.value, 10); 
-    value = isNaN(value)? 0 : value;
-    value ++;
+    var value = parseInt(input.value, 10);
+    value = isNaN(value) ? 0 : value;
+    value++;
     input.value = value;
-  }
-  function decreaseCount(a, b) {
+}
+function decreaseCount(a, b) {
     var input = b.nextElementSibling;
-    var value = parseInt(input.value, 10); 
+    var value = parseInt(input.value, 10);
     if (value > 1) {
-      value = isNaN(value)? 0 : value;
-      value --;
-      input.value = value;
+        value = isNaN(value) ? 0 : value;
+        value--;
+        input.value = value;
     }
-  }
+}
+
+// funcion para cantidad de productos CARRITO 
+let cantidadProductosAAgregar = 0
+
+function cantidadProductosAlCarrito(producto) {
+    let ubicacionCantidadProductosAAgregar = document.getElementById(`${producto.numeroProducto}`)
+    cantidadProductosAAgregar = (ubicacionCantidadProductosAAgregar.value)
+    return cantidadProductosAAgregar;
+}
+
+let total = 0;
+
 
 // funcion agregar productos a carrito - CARRITO 
 function agregarProducto(numeroProducto) {
-    productoAgregado = listaProductos.find(producto => producto.numeroProducto == numeroProducto);
-    canasto.push(productoAgregado);
+
+    let productoPorAgregarAlCarrito  = listaProductos.find(producto => producto.numeroProducto == numeroProducto);
+
+    let findProductoEnCanasto = canasto.find(item => numeroProducto == item.MacetaOPlanta.numeroProducto);
+
+    let cantidadPorAgregar = cantidadProductosAlCarrito(productoPorAgregarAlCarrito)
+
+    if(findProductoEnCanasto !== undefined){ //Si ya estaba agregado al canasto
+        findProductoEnCanasto.cantidad = cantidadPorAgregar
+
+    } else {
+        canasto.push( new ItemCarrito ( productoPorAgregarAlCarrito , cantidadPorAgregar ) )
+    }
+
     mostrarProductosCarrito(canasto);
     mostrarSubtotalEnvio();
 }
@@ -189,22 +219,21 @@ function mostrarProductosCarrito(canasto) {
     }
     costoCarrito(canasto);
     showCarrito();
-    almacenarProductos();
-
+    //almacenarProductos();
 }
 
 
 // Generar HTMLCarrito ()
-function generarCardHTMLCarrito(producto) {
-    htmlCarrito = ` 
+function generarCardHTMLCarrito(itemCarrito) {
+    let htmlCarrito = ` 
     <li class="list-group-item animate__animated animate__fadeIn">
     <div class="card-carrito">
-    <h5 class="card-title">${producto?.titulo() || "[Producto inexistente]"}</h5>
-    <p> Cantidad: </p>
-    <p hidden> ${producto?.numeroProducto} </p>
+    <h5 class="card-title">${itemCarrito.MacetaOPlanta.titulo() || "[Producto inexistente]"}</h5>
+    <p> Cantidad: ${itemCarrito.cantidad} </p>
+    <p hidden> ${itemCarrito.MacetaOPlanta.numeroProducto} </p>
     <div>
-    <span class="precio badge bg-dark">$${producto?.precio}</span>  
-    <a href="#!" onclick= "eliminarProductoCarrito(${producto?.numeroProducto})"> <i class="iTrash bi bi-trash3"></i></a>
+    <span class="precio badge bg-dark">$${itemCarrito?.MacetaOPlanta.precio}</span>  
+    <a href="#!" onclick= "eliminarProductoCarrito(${itemCarrito.MacetaOPlanta.numeroProducto})"> <i class="iTrash bi bi-trash3"></i></a>
     </div>
     </div>
     </li>`
@@ -213,12 +242,14 @@ function generarCardHTMLCarrito(producto) {
 
 
 // funcion mostrar subtotal y costo de envio - CARRITO 
+let elementoContendorSubtotalEnvio = document.getElementById("subtotalEnvio");
 function mostrarSubtotalEnvio() {
-    let elementoContendorSubtotalEnvio = document.getElementById("subtotalEnvio");
+
     elementoContendorSubtotalEnvio.innerHTML = ` <li class="list-group-item">
     <div class="card-carrito">
     <p> Costo de envío: $${envio}</p>
-        <h5 class="card-title">Total con envío: $${total + envio}</h5> 
+    <h5 class="card-title">Total con envío: $${total + envio}</h5> 
+    <button onclick="pagarConMercadoPago(canasto)" class="choi-container">Pagá</button>
     </div>
     </li>`
 
@@ -228,13 +259,13 @@ function mostrarSubtotalEnvio() {
 function costoCarrito(canasto) {
     total = 0;
     for (let i = 0; i < canasto.length; i++) {
-        total += canasto[i].precio;
+        total += canasto[i].MacetaOPlanta.precio;
     }
     return (total);
 
 }
 
-
+/*
 // ALMACENAR productos del carrito - STORAGE
 function almacenarProductos() {
     let jString = JSON.stringify(canasto);
@@ -242,15 +273,15 @@ function almacenarProductos() {
 }
 
 // RECUPERAR productos del carrito - STORAGE
-let productos = [];
+let productosRecuperados = [];
 function recuperarProductosAlmacenados() {
     getProductosStorageAsync();
-    canasto = productos;
+    canasto = productosRecuperados;
 }
 
 
 function getProductosStorageAsync() {
-    let myPromise=  new Promise((resolve, reject) => {
+    let myPromise = new Promise((resolve, reject) => {
 
         const almacenados = JSON.parse(window.localStorage.getItem("carrito")) || [];
         productos = [];
@@ -270,39 +301,21 @@ function getProductosStorageAsync() {
     return myPromise;
 }
 
-getProductosStorageAsync().then( (response) => console.log (response))
-.catch(error=> console.log(error, "error"));
+getProductosStorageAsync().then((response) => console.log(response))
+    .catch(error => console.log(error, "error"));
 
-
-/* ORIGINAL 
-function recuperarProductosAlmacenados() {
-    
-
-    const almacenados = JSON.parse(window.localStorage.getItem("carrito")) || [];
-    productos = [];
-
-    if (almacenados != null) {
-        for (const productoGuardado of almacenados) {
-            let esPlanta = (productoGuardado.categoria == "planta");
-            productos.push(esPlanta ? new Planta(productoGuardado) : new Maceta(productoGuardado));
-        }
-    }
-    canasto = productos;
-}
 */
-
-const elementoCarrito = document.getElementById("popUpCarrito");
 
 
 // funciones para mostrar y ocultar productos
+const elementoCarrito = document.getElementById("popUpCarrito");
+
 function hideShowProductos() {
     if (elementoCarrito.style.display == "block") {
         elementoCarrito.style.display = "none";
     }
-
     else {
         elementoCarrito.style.display = "block";
-        costoCarrito(canasto)
         mostrarSubtotalEnvio();
         mostrarProductosCarrito(canasto);
     }
@@ -315,7 +328,6 @@ function showCarrito() {
 
 
 // ELIMINAR productos de CANASTO
-
 let posicionAEliminar = 0;
 
 function eliminarProductoCarrito(numeroProducto) {
@@ -327,8 +339,20 @@ function eliminarProductoCarrito(numeroProducto) {
     showCarrito();
 }
 
-// MERCADOPAGO
+// Vaciar Carrito de compra
+function vaciarCarritoCompra() {
+    canasto = [];
 
+    elementoContendorSubtotalEnvio.innerHTML = ` <li class="list-group-item">
+    <div class="card-carrito">
+    <p id="sinProductos" > No hay productos agregados</p>
+         
+    </div>
+    </li>`
+    mostrarProductosCarrito(canasto);
+}
+
+// MERCADOPAGO
 const mp = new MercadoPago('TEST-14b726e0-811d-4ca1-ae2d-a2abd12469e8', {
     locale: 'es-AR',
     advancedFraudPrevention: true,

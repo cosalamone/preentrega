@@ -135,6 +135,7 @@ h1,h2,h3,h4,h5,h6 {
     justify-content: center;
     height: 35px;
     width: 55px;
+    float:right;
 }
 
 .counter {
@@ -171,4 +172,12 @@ h1,h2,h3,h4,h5,h6 {
     font-size: 12px;
     background: rgb(90, 107, 76);
     color: #fff;
+}
+
+#sinProductos{
+    text-align: center;
+}
+
+#subtotalEnvio{
+    display: block;
 }
