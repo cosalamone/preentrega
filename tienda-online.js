@@ -97,7 +97,7 @@ window.onload = function () {
     }
 
     mostrarProductos(listaProductos);
-   // recuperarProductosAlmacenados();
+    recuperarProductosAlmacenados();
 }
 
 
@@ -211,7 +211,7 @@ function agregarProducto(numeroProducto) {
 
 
 // Funcion mostrarProductosCarrito - CARRITO 
-function mostrarProductosCarrito(canasto) {
+function mostrarProductosCarrito() {
     let elementoContenedorCarrito = document.getElementById("contenedorCarrito");
     elementoContenedorCarrito.innerHTML = "";
     for (let i = 0; i < canasto.length; i++) {
@@ -219,7 +219,7 @@ function mostrarProductosCarrito(canasto) {
     }
     costoCarrito(canasto);
     showCarrito();
-    //almacenarProductos();
+    almacenarProductos();
 }
 
 
@@ -265,7 +265,7 @@ function costoCarrito(canasto) {
 
 }
 
-/*
+
 // ALMACENAR productos del carrito - STORAGE
 function almacenarProductos() {
     let jString = JSON.stringify(canasto);
@@ -284,12 +284,17 @@ function getProductosStorageAsync() {
     let myPromise = new Promise((resolve, reject) => {
 
         const almacenados = JSON.parse(window.localStorage.getItem("carrito")) || [];
-        productos = [];
+        productosRecuperados = [];
         if (almacenados != null) {
 
             for (const productoGuardado of almacenados) {
-                let esPlanta = (productoGuardado.categoria == "planta");
-                productos.push(esPlanta ? new Planta(productoGuardado) : new Maceta(productoGuardado));
+                let esPlanta = (productoGuardado.MacetaOPlanta.categoria == "planta");
+
+                let item = new ItemCarrito(
+                    esPlanta ? new Planta(productoGuardado.MacetaOPlanta) : new Maceta(productoGuardado.MacetaOPlanta), 
+                    productoGuardado.cantidad);
+
+                productosRecuperados.push(item);
             }
             resolve(productos);
         } else {
@@ -304,20 +309,21 @@ function getProductosStorageAsync() {
 getProductosStorageAsync().then((response) => console.log(response))
     .catch(error => console.log(error, "error"));
 
-*/
 
 
 // funciones para mostrar y ocultar productos
 const elementoCarrito = document.getElementById("popUpCarrito");
 
 function hideShowProductos() {
+    
     if (elementoCarrito.style.display == "block") {
         elementoCarrito.style.display = "none";
     }
     else {
         elementoCarrito.style.display = "block";
+        
+        mostrarProductosCarrito();
         mostrarSubtotalEnvio();
-        mostrarProductosCarrito(canasto);
     }
 }
 
@@ -337,6 +343,7 @@ function eliminarProductoCarrito(numeroProducto) {
     costoCarrito(canasto);
     mostrarSubtotalEnvio();
     showCarrito();
+    if (canasto = []) {vaciarCarritoCompra()}
 }
 
 // Vaciar Carrito de compra
