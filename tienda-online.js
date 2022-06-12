@@ -1,68 +1,12 @@
-// CLASES PLANTAS Y MACETAS
-class Planta {
-    constructor(producto) {
-        this.numeroProducto = producto.numeroProducto;
-        this.categoria = producto.categoria;
-        this.especie = producto.especie;
-        this.tipo = producto.tipo;
-        this.precio = producto.precio;
-        this.foto = producto.foto;
-        this.descripcion = producto.descripcion;
-    }
+import { ServicioProductos } from "./servicios/servicioProductos.js";
+import { ItemCarrito } from "./clases/itemCarrito.js";
+import { ServicioMercadoPago } from "./servicios/servicioMercadoPago.js";
+import { ServicioStorage } from "./servicios/servicioStorage.js";
 
-
-    titulo() {
-        return (this.especie + " " + this.tipo)
-    }
-}
-
-
-class Maceta {
-    constructor(producto) {
-        this.numeroProducto = producto.numeroProducto;
-        this.categoria = producto.categoria;
-        this.material = producto.material;
-        this.color = producto.color;
-        this.tamaño = producto.tamaño;
-        this.foto = producto.foto;
-        this.precio = producto.precio;
-        this.descripcion = producto.descripcion;
-    }
-    titulo() {
-        return (this.categoria + " de " + this.material + " " + this.color + " n" + this.tamaño)
-    }
-}
-
-// CLASE PARA AGREGAR AL CARRITO
-class ItemCarrito {
-    constructor(MacetaOPlanta, cantidad) {
-        this.MacetaOPlanta = MacetaOPlanta;
-        this.cantidad = cantidad;
-    }
-
-}
-
-
-// ARRAY DE PRODUCTOS 
-let listaProductos = [
-    new Planta({ numeroProducto: 1, categoria: "planta", especie: "haworthia", tipo: "fasciata", precio: 200, foto: "./fotos/rsz_haworthia_fasciata.jpg", descripcion: "¡Suculenta ideal para interior! Ideal para lugares iluminados sin sol directo." }),
-    new Planta({ numeroProducto: 2, categoria: "planta", especie: "graptopetalum", tipo: "paraguayense", precio: 150, foto: "./fotos/rsz_suculentas-1.jpg", descripcion: "Ideal para lugares con sol directo entre 3 y 6 horas. En verano protegerla de las horas mpas fuertes de sol." }),
-    new Planta({ numeroProducto: 3, categoria: "planta", especie: "echeveria", tipo: "caly argentea", precio: 250, foto: "./fotos/rsz_echeveriacalyargentea.jpg", descripcion: "Por su pruina aguanta bien las horas de sol. Hay que tener cuidado con no excederse con el riego, es propensa a pudrición de tallo" }),
-    new Planta({ numeroProducto: 4, categoria: "planta", especie: "gasteria", tipo: "normal", precio: 250, foto: "./fotos/rsz_1suculenta-4.jpg", descripcion: "Necesitan cuidados similares a las haworthias, lugares con luz natural pero sin sol directo" }),
-    new Planta({ numeroProducto: 5, categoria: "planta", especie: "sedum", tipo: "burrito", precio: 250, foto: "./fotos/rsz_sedumburrito.jpg", descripcion: "Hermosa suculenta colgante. Ideal para lugares iluminados con pocas horas de sol, preferentemente sol suave de la mañana o últimos de la tarde" }),
-    new Planta({ numeroProducto: 6, categoria: "planta", especie: "calathea", tipo: "triostar", precio: 350, foto: "./fotos/rsz_calatheas.jpg", descripcion: "Ideal para lugares iluminados sin sol directo" }),
-    new Planta({ numeroProducto: 7, categoria: "planta", especie: "pothus", tipo: "variegado", precio: 500, foto: "./fotos/rsz_pothos.jpg", descripcion: "Planta de interior, sin sol directo, ideal para lugares humedos como el baño" }),
-    new Planta({ numeroProducto: 8, categoria: "planta", especie: "monstera deliciosa", tipo: "normal", precio: 1200, foto: "./fotos/rsz_monstera.jpg", descripcion: "Ideal para lugares con mediasombra, como debajo de un arbol o lugar semitechado" }),
-    new Maceta({ numeroProducto: 9, categoria: "maceta", material: "plastico", color: "negra", tamaño: 8, foto: "./fotos/rsz_maceta-plastico-8-negra.jpg", precio: 50, descripcion: "Maceta de plastico de color negra. Tamaño numero 8" }),
-    new Maceta({ numeroProducto: 10, categoria: "maceta", material: "plastico", color: "negra", tamaño: 12, foto: "./fotos/rsz_maceta-plastico-negra-12.jpg", precio: 70, descripcion: "Maceta de plastico de color negra. Tamaño numero 12" }),
-    new Maceta({ numeroProducto: 11, categoria: "maceta", material: "plastico", color: "negra", tamaño: 24, foto: "./fotos/rsz_maceta-plastico-24-negra.jpg", precio: 140, descripcion: "Maceta de plastico de color negra. Tamaño numero 24" }),
-    new Maceta({ numeroProducto: 12, categoria: "maceta", material: "plastico", color: "blanco", tamaño: 8, foto: "./fotos/rsz_maceta-plastico-blanca-8.jpg", precio: 50, descripcion: "Maceta de plastico de color blanco. Tamaño numero 8" }),
-    new Maceta({ numeroProducto: 13, categoria: "maceta", material: "plastico", color: "blanco", tamaño: 12, foto: "./fotos/rsz_maceta-plastico-12.jpg", precio: 70, descripcion: "Maceta de plastico de color blanco. Tamaño numero 12" }),
-    new Maceta({ numeroProducto: 14, categoria: "maceta", material: "plastico", color: "blanco", tamaño: 24, foto: "./fotos/rsz_maceta-plastico-blanca-24.jpg", precio: 140, descripcion: "Maceta de plastico de color blanco. Tamaño numero 24" }),
-    new Maceta({ numeroProducto: 15, categoria: "maceta", material: "barro", color: "terracota", tamaño: 8, foto: "./fotos/rsz_maceta-barro-8.jpg", precio: 90, descripcion: "Maceta de barro. Tamaño numero 8" }),
-    new Maceta({ numeroProducto: 16, categoria: "maceta", material: "barro", color: "terracota", tamaño: 12, foto: "./fotos/rsz_maceta-barro-12.jpg", precio: 120, descripcion: "Maceta de barro. Tamaño numero 12" }),
-    new Maceta({ numeroProducto: 17, categoria: "maceta", material: "barro", color: "terracota", tamaño: 24, foto: "./fotos/rsz_maceta-barro-24.jpg", precio: 200, descripcion: "Maceta de barro. Tamaño numero 24" }),
-]
+let listaProductos = new ServicioProductos().traerProductos();
+let itemCarrito = new ItemCarrito();
+let servicioMercadoPago = new ServicioMercadoPago();
+let servicioStorage = new ServicioStorage();
 
 
 let html = "";
@@ -72,7 +16,6 @@ let envio = 349;
 
 window.onload = function () {
     //ESTO SE HACE EN EL ONLOAD, CUANDO SE CARGUA LA PAGINA REVISA SI ES UN REENVIO DESDE MP -
-
 
     let searchParams = new URLSearchParams(window.location.search)
     searchParams.has('status') // true
@@ -87,17 +30,56 @@ window.onload = function () {
                 icon: 'success',
                 confirmButtonText: 'Regresar a Sucu.home'
             })
-        } else
+        } else {
             Swal.fire({
                 title: 'Error!',
                 text: 'Hubo un error al momento del pago y no pudo registrarse su compra',
                 icon: 'error',
                 confirmButtonText: 'Regresar a Sucu.home'
             })
+        }
     }
 
     mostrarProductos(listaProductos);
-    recuperarProductosAlmacenados();
+    servicioStorage.recuperarProductosAlmacenadosAsync().then(productosResult => canasto = productosResult);
+
+
+    // counter de productos para el CARRITO
+    let botonesDisminuirCantidad = document.getElementsByName("disminuirCantidad");
+    let botonesAumentarCantidad = document.getElementsByName("aumentarCantidad");
+
+    botonesDisminuirCantidad.forEach(elementoBoton =>
+        elementoBoton.onclick = (event) => {
+            var input = event.target.nextElementSibling;
+            var value = parseInt(input.value, 10);
+            if (value > 1) {
+                value = isNaN(value) ? 0 : value;
+                value--;
+                input.value = value;
+            }
+        }
+    );
+
+
+    botonesAumentarCantidad.forEach(elementoBoton =>
+        elementoBoton.onclick = (event) => {
+            var input = event.target.previousElementSibling;
+            var value = parseInt(input.value, 10);
+            value = isNaN(value) ? 0 : value;
+            value++;
+            input.value = value;
+        }
+    );
+
+
+    let botonesAddProducto = document.getElementsByName("botonAddProducto");
+
+    botonesAddProducto.forEach(elementoBoton =>
+        elementoBoton.onclick = (evento) => {
+            let botonQueHicieronClick = evento.target;
+            let numeroProducto = Number(botonQueHicieronClick.previousElementSibling.innerText);
+            alert(numeroProducto);
+        });
 }
 
 
@@ -124,18 +106,20 @@ function generarHTML(producto) {
             <div class="card-body">
                 <h5 class="card-title">${producto?.titulo() || "[Producto inexistente]"}</h5>
                 <p class="card-text">${producto?.descripcion}</p>
-                <p hidden> ${producto?.numeroProducto} </p>
+                
                 
                 <div>
                     <div class="precio badge bg-dark">$${producto?.precio}</div>
-                    <a class="nav-link" href="#!" onclick="agregarProducto(${producto?.numeroProducto})">
-                        <i class="iCarrito bi bi-cart-plus"></i></a>
+                    <a class="nav-link" href="#!" name="botonAddProducto">
+                        <p id="numeroProducto" hidden> ${producto?.numeroProducto} </p>
+                        <i class="iCarrito bi bi-cart-plus"></i>
+                    </a>
                 </div>
 
                 <div class="counter">
-                    <span class="down" onClick="decreaseCount(event, this)">-</span>
-                    <input type="text" id="${producto?.numeroProducto}" value="1">
-                    <span class="up" onClick="increaseCount(event, this)">+</span>
+                    <span class="down" name= "disminuirCantidad">-</span>
+                    <input type="text" disabled id="${producto?.numeroProducto}" value="1">
+                    <span class="up" name= "aumentarCantidad">+</span>
                 </div>
             </div>
         </div>
@@ -159,23 +143,7 @@ let botonCarrito = document.getElementById("iconoCarrito");
 botonCarrito.onclick = () => hideShowProductos();
 
 
-// counter de productos para el CARRITO
-function increaseCount(a, b) { // a event?
-    var input = b.previousElementSibling;
-    var value = parseInt(input.value, 10);
-    value = isNaN(value) ? 0 : value;
-    value++;
-    input.value = value;
-}
-function decreaseCount(a, b) {
-    var input = b.nextElementSibling;
-    var value = parseInt(input.value, 10);
-    if (value > 1) {
-        value = isNaN(value) ? 0 : value;
-        value--;
-        input.value = value;
-    }
-}
+
 
 // funcion para cantidad de productos CARRITO 
 let cantidadProductosAAgregar = 0
@@ -192,17 +160,17 @@ let total = 0;
 // funcion agregar productos a carrito - CARRITO 
 function agregarProducto(numeroProducto) {
 
-    let productoPorAgregarAlCarrito  = listaProductos.find(producto => producto.numeroProducto == numeroProducto);
+    let productoPorAgregarAlCarrito = listaProductos.find(producto => producto.numeroProducto == numeroProducto);
 
     let findProductoEnCanasto = canasto.find(item => numeroProducto == item.MacetaOPlanta.numeroProducto);
 
     let cantidadPorAgregar = cantidadProductosAlCarrito(productoPorAgregarAlCarrito)
 
-    if(findProductoEnCanasto !== undefined){ //Si ya estaba agregado al canasto
+    if (findProductoEnCanasto !== undefined) { //Si ya estaba agregado al canasto
         findProductoEnCanasto.cantidad = cantidadPorAgregar
 
     } else {
-        canasto.push( new ItemCarrito ( productoPorAgregarAlCarrito , cantidadPorAgregar ) )
+        canasto.push(new ItemCarrito(productoPorAgregarAlCarrito, cantidadPorAgregar))
     }
 
     mostrarProductosCarrito(canasto);
@@ -219,7 +187,7 @@ function mostrarProductosCarrito() {
     }
     costoCarrito(canasto);
     showCarrito();
-    almacenarProductos();
+    servicioStorage.almacenarProductos(canasto);
 }
 
 
@@ -249,12 +217,15 @@ function mostrarSubtotalEnvio() {
     <div class="card-carrito">
     <p> Costo de envío: $${envio}</p>
     <h5 class="card-title">Total con envío: $${total + envio}</h5> 
-    <button onclick="pagarConMercadoPago(canasto)" class="choi-container">Pagá</button>
+    <button onclick="pagarClick(canasto)" class="choi-container">Pagá</button>
     </div>
     </li>`
 
 }
 
+function pagarClick(canasto) {
+    pagarConMercadoPago(canasto);
+}
 
 function costoCarrito(canasto) {
     total = 0;
@@ -265,63 +236,17 @@ function costoCarrito(canasto) {
 
 }
 
-
-// ALMACENAR productos del carrito - STORAGE
-function almacenarProductos() {
-    let jString = JSON.stringify(canasto);
-    localStorage.setItem("carrito", jString);
-}
-
-// RECUPERAR productos del carrito - STORAGE
-let productosRecuperados = [];
-function recuperarProductosAlmacenados() {
-    getProductosStorageAsync();
-    canasto = productosRecuperados;
-}
-
-
-function getProductosStorageAsync() {
-    let myPromise = new Promise((resolve, reject) => {
-
-        const almacenados = JSON.parse(window.localStorage.getItem("carrito")) || [];
-        productosRecuperados = [];
-        if (almacenados != null) {
-
-            for (const productoGuardado of almacenados) {
-                let esPlanta = (productoGuardado.MacetaOPlanta.categoria == "planta");
-
-                let item = new ItemCarrito(
-                    esPlanta ? new Planta(productoGuardado.MacetaOPlanta) : new Maceta(productoGuardado.MacetaOPlanta), 
-                    productoGuardado.cantidad);
-
-                productosRecuperados.push(item);
-            }
-            resolve(productos);
-        } else {
-            let storageVacio = "No hay productos guardados en el carrito de compras";
-            reject(storageVacio);
-        }
-    });
-
-    return myPromise;
-}
-
-getProductosStorageAsync().then((response) => console.log(response))
-    .catch(error => console.log(error, "error"));
-
-
-
 // funciones para mostrar y ocultar productos
 const elementoCarrito = document.getElementById("popUpCarrito");
 
 function hideShowProductos() {
-    
+
     if (elementoCarrito.style.display == "block") {
         elementoCarrito.style.display = "none";
     }
     else {
         elementoCarrito.style.display = "block";
-        
+
         mostrarProductosCarrito();
         mostrarSubtotalEnvio();
     }
@@ -343,7 +268,7 @@ function eliminarProductoCarrito(numeroProducto) {
     costoCarrito(canasto);
     mostrarSubtotalEnvio();
     showCarrito();
-    if (canasto = []) {vaciarCarritoCompra()}
+    if (canasto = []) { vaciarCarritoCompra() }
 }
 
 // Vaciar Carrito de compra
@@ -373,87 +298,3 @@ const checkout = mp.checkout({
 
 
 
-// funcion que simula backend, ya que el acces token del vendedor deberia ir ahi, porque en el frontend está expuesto
-function pagarConMercadoPago(canasto) {
-
-    let myHeaders = new Headers();
-    const ACCESS_TOKEN_VENDEDOR = "APP_USR-8855633324297819-051818-59fc62a2c58d61b5151a92d54660062e-1125631595";
-    myHeaders.append("Authorization", `Bearer ${ACCESS_TOKEN_VENDEDOR}`);
-    myHeaders.append("Content-Type", "application/json");
-
-    let items = canasto.map(producto => {
-        return {
-            id: producto.numeroProducto,
-            title: producto.titulo,
-            currency_id: "ARS",
-            picture_url: producto.foto,
-            desription: producto.descripcion,
-            category_id: "art",
-            quantity: 1,
-            unit_price: producto.precio,
-        }
-    })
-
-    let raw = JSON.stringify(
-        {
-            items: items,
-
-            payer: {
-                name: "",
-                surname: "",
-                email: "",
-                phone: {
-                    area_code: "",
-                    number: ""
-                },
-                identification: {
-                    type: "",
-                    number: ""
-                },
-                address: {
-                    street_name: "",
-                    street_number: 0,
-                    zip_code: ""
-                }
-            },
-
-            shipments: {
-                "cost": 349,
-                "mode": "not_specified",
-            },
-            back_urls: {
-                success: "https://cosalamone.github.io/tienda-sucuhome",
-                failure: "https://cosalamone.github.io/tienda-sucuhome",
-                pending: "https://cosalamone.github.io/tienda-sucuhome"
-            },
-            auto_return: "approved",
-            payment_methods: {
-                installments: 6
-            },
-            notification_url: "www.URL-WEBHOOK-FALSA-PORQUE-NO-TENGO-BACKEND.com",
-            statement_descriptor: "Tienda sucuhome",
-            external_reference: "mlplesoj9b",
-
-
-        });
-
-    let requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-    };
-
-
-    fetch("https://api.mercadopago.com/checkout/preferences", requestOptions)
-        .then(response => response.text())
-        .then(result => {
-            console.log(result) //ACA LLEGA COMO STRING LA URL DE PAGO A LA QUE REDIRECCIONO AL USUARIO, ENTRE OTRAS COSAS.
-            let resultParseado = JSON.parse(result)
-            console.log(resultParseado)
-
-            let linkPago = resultParseado.init_point
-            location.href = linkPago;
-        })
-        .catch(error => console.log('error', error));
-}
