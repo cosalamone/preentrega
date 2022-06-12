@@ -2,20 +2,22 @@ import { ServicioProductos } from "./servicios/servicioProductos.js";
 import { ItemCarrito } from "./clases/itemCarrito.js";
 import { ServicioMercadoPago } from "./servicios/servicioMercadoPago.js";
 import { ServicioStorage } from "./servicios/servicioStorage.js";
+import { ServicioCarrito } from "./servicios/servicioCarrito.js";
 
 let listaProductos = new ServicioProductos().traerProductos();
 let itemCarrito = new ItemCarrito();
 let servicioMercadoPago = new ServicioMercadoPago();
 let servicioStorage = new ServicioStorage();
-
+let servicioCarrito = new ServicioCarrito();
 
 let html = "";
-let canasto = [];
 let envio = 349;
-
+let elementoCarrito;
+let elementoContendorSubtotalEnvio;
 
 window.onload = function () {
     //ESTO SE HACE EN EL ONLOAD, CUANDO SE CARGUA LA PAGINA REVISA SI ES UN REENVIO DESDE MP -
+
 
     let searchParams = new URLSearchParams(window.location.search)
     searchParams.has('status') // true
@@ -41,7 +43,7 @@ window.onload = function () {
     }
 
     mostrarProductos(listaProductos);
-    servicioStorage.recuperarProductosAlmacenadosAsync().then(productosResult => canasto = productosResult);
+    servicioStorage.recuperarProductosAlmacenadosAsync().then(productosResult => servicioCarrito.canasto = productosResult);
 
 
     // counter de productos para el CARRITO
@@ -78,8 +80,20 @@ window.onload = function () {
         elementoBoton.onclick = (evento) => {
             let botonQueHicieronClick = evento.target;
             let numeroProducto = Number(botonQueHicieronClick.previousElementSibling.innerText);
-            alert(numeroProducto);
-        });
+            servicioCarrito.agregarProducto(numeroProducto); // LLAMAR A LA FUNCION DE AGREGAR PRODUCTO Y PASRLE EL NROPRODUCTO
+        }
+    );
+
+
+    let elementosFiltro = document.getElementsByName("navBarFiltro");
+    elementosFiltro.forEach(elementoBoton=>
+        elementoBoton.onclick = (evento) => {
+        let botonQueHicieronClick = evento.target.innerText;
+        let listaFiltrada = [];
+        listaFiltrada = listaProductos.filter(unProducto => unProducto.categoria == botonQueHicieronClick.toLowerCase());
+        mostrarProductos(listaFiltrada);
+    }
+    );
 }
 
 
@@ -130,64 +144,31 @@ function generarHTML(producto) {
 
 
 // FUNCION FILTER LISTAPRODUCTOS en tienda
-function filtro(categoria) {
-    let listaFiltrada = [];
 
-    listaFiltrada = listaProductos.filter(unProducto => unProducto.categoria == categoria);
-    mostrarProductos(listaFiltrada);
-}
 
 
 // ICONOCARRITO - NAVBAR
 let botonCarrito = document.getElementById("iconoCarrito");
 botonCarrito.onclick = () => hideShowProductos();
 
-
-
-
-// funcion para cantidad de productos CARRITO 
-let cantidadProductosAAgregar = 0
-
-function cantidadProductosAlCarrito(producto) {
-    let ubicacionCantidadProductosAAgregar = document.getElementById(`${producto.numeroProducto}`)
-    cantidadProductosAAgregar = (ubicacionCantidadProductosAAgregar.value)
-    return cantidadProductosAAgregar;
-}
-
 let total = 0;
 
-
-// funcion agregar productos a carrito - CARRITO 
-function agregarProducto(numeroProducto) {
-
-    let productoPorAgregarAlCarrito = listaProductos.find(producto => producto.numeroProducto == numeroProducto);
-
-    let findProductoEnCanasto = canasto.find(item => numeroProducto == item.MacetaOPlanta.numeroProducto);
-
-    let cantidadPorAgregar = cantidadProductosAlCarrito(productoPorAgregarAlCarrito)
-
-    if (findProductoEnCanasto !== undefined) { //Si ya estaba agregado al canasto
-        findProductoEnCanasto.cantidad = cantidadPorAgregar
-
-    } else {
-        canasto.push(new ItemCarrito(productoPorAgregarAlCarrito, cantidadPorAgregar))
-    }
-
-    mostrarProductosCarrito(canasto);
-    mostrarSubtotalEnvio();
-}
+// FUNCION QUE MUESTRA PRODUCTOS DEL CARRITO EN HTML INDEPENDIENTE DE AGREGAR PRODUCTOS AL 
+//ARRAY CANASTO (QUE ESTA EN SERVICIOCARRITO, AL CUAL LE PASO EL  DE PROD Y ME DEVUELVE EL ARRAY COMPLETO)
+mostrarProductosCarrito(servicioCarrito.canasto);
+mostrarSubtotalEnvio();
 
 
 // Funcion mostrarProductosCarrito - CARRITO 
 function mostrarProductosCarrito() {
     let elementoContenedorCarrito = document.getElementById("contenedorCarrito");
     elementoContenedorCarrito.innerHTML = "";
-    for (let i = 0; i < canasto.length; i++) {
-        elementoContenedorCarrito.innerHTML += generarCardHTMLCarrito(canasto[i]);
+    for (let i = 0; i < servicioCarrito.canasto.length; i++) {
+        elementoContenedorCarrito.innerHTML += generarCardHTMLCarrito(servicioCarrito.canasto[i]);
     }
-    costoCarrito(canasto);
+    costoCarrito(servicioCarrito.canasto);
     showCarrito();
-    servicioStorage.almacenarProductos(canasto);
+    servicioStorage.almacenarProductos(servicioCarrito.canasto);
 }
 
 
@@ -210,37 +191,35 @@ function generarCardHTMLCarrito(itemCarrito) {
 
 
 // funcion mostrar subtotal y costo de envio - CARRITO 
-let elementoContendorSubtotalEnvio = document.getElementById("subtotalEnvio");
-function mostrarSubtotalEnvio() {
 
+function mostrarSubtotalEnvio() {
+    elementoContendorSubtotalEnvio = document.getElementById("subtotalEnvio");
     elementoContendorSubtotalEnvio.innerHTML = ` <li class="list-group-item">
     <div class="card-carrito">
     <p> Costo de envío: $${envio}</p>
     <h5 class="card-title">Total con envío: $${total + envio}</h5> 
-    <button onclick="pagarClick(canasto)" class="choi-container">Pagá</button>
+    <button onclick="pagarClick()" class="choi-container">Pagá</button>
     </div>
     </li>`
 
 }
 
-function pagarClick(canasto) {
-    pagarConMercadoPago(canasto);
+function pagarClick() {
+    pagarConMercadoPago(servicioCarrito.canasto);
 }
 
-function costoCarrito(canasto) {
+function costoCarrito() {
     total = 0;
-    for (let i = 0; i < canasto.length; i++) {
-        total += (canasto[i].MacetaOPlanta.precio * canasto[i].cantidad);
+    for (let i = 0; i < servicioCarrito.canasto.length; i++) {
+        total += (servicioCarrito.canasto[i].MacetaOPlanta.precio * servicioCarrito.canasto[i].cantidad);
     }
     return (total);
 
-}
+};
 
-// funciones para mostrar y ocultar productos
-const elementoCarrito = document.getElementById("popUpCarrito");
-
+// funciones para mostrar y ocultar productos;
 function hideShowProductos() {
-
+    elementoCarrito = document.getElementById("popUpCarrito");
     if (elementoCarrito.style.display == "block") {
         elementoCarrito.style.display = "none";
     }
@@ -250,30 +229,31 @@ function hideShowProductos() {
         mostrarProductosCarrito();
         mostrarSubtotalEnvio();
     }
-}
+};
 
 
 function showCarrito() {
+    elementoCarrito = document.getElementById("popUpCarrito");
     elementoCarrito.style.display = "block";
-}
+};
 
 
 // ELIMINAR productos de CANASTO
 let posicionAEliminar = 0;
 
 function eliminarProductoCarrito(numeroProducto) {
-    posicionAEliminar = canasto.findIndex(producto => producto.numeroProducto == numeroProducto);
-    canasto.splice(posicionAEliminar, 1);
-    mostrarProductosCarrito(canasto);
-    costoCarrito(canasto);
+    posicionAEliminar = servicioCarrito.canasto.findIndex(producto => producto.numeroProducto == numeroProducto);
+    servicioCarrito.canasto.splice(posicionAEliminar, 1);
+    mostrarProductosCarrito(servicioCarrito.canasto);
+    costoCarrito(servicioCarrito.canasto);
     mostrarSubtotalEnvio();
     showCarrito();
-    if (canasto = []) { vaciarCarritoCompra() }
+    if (servicioCarrito.canasto = []) { vaciarCarritoCompra() }
 }
 
 // Vaciar Carrito de compra
 function vaciarCarritoCompra() {
-    canasto = [];
+    servicioCarrito.canasto = [];
 
     elementoContendorSubtotalEnvio.innerHTML = ` <li class="list-group-item">
     <div class="card-carrito">
@@ -281,7 +261,7 @@ function vaciarCarritoCompra() {
          
     </div>
     </li>`
-    mostrarProductosCarrito(canasto);
+    mostrarProductosCarrito(servicioCarrito.canasto);
 }
 
 // MERCADOPAGO
