@@ -110,7 +110,18 @@ window.onload = function () {
     );
 
 
+    let botonVaciarCarrito = document.getElementById("botonVaciarCarrito");
+    botonVaciarCarrito.onclick = () => {
+        servicioCarrito.canasto = [];
 
+        elementoContendorSubtotalEnvio.innerHTML = ` 
+    <li class="list-group-item">
+        <div class="card-carrito">
+            <p id="sinProductos"> No hay productos agregados</p>
+        </div>
+    </li>`
+        mostrarProductosCarrito(servicioCarrito.canasto);
+    }
 
 }
 
@@ -180,6 +191,8 @@ function mostrarProductosCarrito() {
     servicioStorage.almacenarProductos(servicioCarrito.canasto);
 };
 
+
+
 function botonEliminarDelCarritoClick(evento) {
     let botonQueHicieronClick = evento.target;
     let numeroProducto = Number(botonQueHicieronClick.nextElementSibling.innerText);
@@ -211,20 +224,6 @@ function generarCardHTMLCarrito(itemCarrito) {
     </li>`
 
     return (htmlCarrito);
-}
-
-
-let botonVaciarCarrito = document.getElementsByClassName("buttonVaciarCarrito");
-botonVaciarCarrito.onclick = () => {
-    servicioCarrito.canasto = [];
-
-    elementoContendorSubtotalEnvio.innerHTML = ` 
-    <li class="list-group-item">
-        <div class="card-carrito">
-            <p id="sinProductos"> No hay productos agregados</p>
-        </div>
-    </li>`
-    mostrarProductosCarrito(servicioCarrito.canasto);
 }
 
 /*// Vaciar Carrito de compra;
@@ -269,12 +268,6 @@ function costoCarrito() {
     return (total);
 
 };
-
-
-
-/*function pagarClick() {
-    pagarConMercadoPago(servicioCarrito.canasto);
-}*/
 
 
 // funciones para mostrar y ocultar productos;
