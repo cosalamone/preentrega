@@ -1,11 +1,10 @@
 import { ServicioProductos } from "./servicios/servicioProductos.js";
-import { ItemCarrito } from "./clases/itemCarrito.js";
 import { ServicioMercadoPago } from "./servicios/servicioMercadoPago.js";
 import { ServicioStorage } from "./servicios/servicioStorage.js";
 import { ServicioCarrito } from "./servicios/servicioCarrito.js";
 
 let listaProductos = new ServicioProductos().traerProductos();
-let itemCarrito = new ItemCarrito();
+
 let servicioMercadoPago = new ServicioMercadoPago();
 let servicioStorage = new ServicioStorage();
 let servicioCarrito = new ServicioCarrito();
@@ -13,12 +12,10 @@ let servicioCarrito = new ServicioCarrito();
 let html = "";
 let envio = 349;
 let elementoCarrito;
-let elementoContendorSubtotalEnvio;
+let elementoContendorSubtotalVacio;
 
 window.onload = function () {
-    //ESTO SE HACE EN EL ONLOAD, CUANDO SE CARGUA LA PAGINA REVISA SI ES UN REENVIO DESDE MP -
-
-
+    //ESTO SE HACE EN EL ONLOAD, CUANDO SE CARGUA LA PAGINA REVISA SI ES UN REENVIO DESDE MP ;
     let searchParams = new URLSearchParams(window.location.search)
     searchParams.has('status') // true
     let param = searchParams.get('status')
@@ -51,6 +48,57 @@ window.onload = function () {
     let botonCarrito = document.getElementById("iconoCarrito");
     botonCarrito.onclick = () => hideShowProductos();
 
+    //funcion mostrarproductos en filtro
+    let botonProductos = document.getElementById("filtroProductos");
+    botonProductos.onclick = () => {
+        document.getElementsByName("navBarFiltro").forEach(elemento => elemento.classList.remove("active"));
+
+        document.getElementById("filtroProductos").classList.add("active")
+        mostrarProductos(listaProductos);
+    };
+
+
+
+    // FUNCION FILTER LISTAPRODUCTOS en tienda
+    let elementosFiltro = document.getElementsByName("navBarFiltro");
+    elementosFiltro.forEach(elementoBoton =>
+        elementoBoton.onclick = (evento) => {
+            document.getElementById("filtroProductos").classList.remove("active")
+            document.getElementsByName("navBarFiltro").forEach(elemento => elemento.classList.remove("active"));
+
+            evento.target.classList.add("active");
+
+            let botonQueHicieronClick = evento.target.innerText;
+            let listaFiltrada = [];
+            listaFiltrada = listaProductos.filter(unProducto => unProducto.categoria == botonQueHicieronClick.toLowerCase());
+            mostrarProductos(listaFiltrada);
+        }
+    )
+
+
+    let botonVaciarCarrito = document.getElementById("botonVaciarCarrito");
+    botonVaciarCarrito.onclick = () => {
+        servicioCarrito.canasto = [];
+
+        elementoContendorSubtotalVacio.innerHTML = ` 
+            <li class="list-group-item">
+                <div class="card-carrito">
+                    <p id="sinProductos"> No hay productos agregados</p>
+                </div>
+            </li>`
+        mostrarProductosCarrito(servicioCarrito.canasto);
+    };
+};
+
+
+// FUNCION MOSTRARPRODUCTOS en tienda
+function mostrarProductos(listaProductos) {
+    let elementoArticulos = document.getElementById("articulos");
+    elementoArticulos.innerHTML = "";
+
+    for (let i = 0; i < listaProductos?.length; i++) {
+        elementoArticulos.innerHTML += generarHTML(listaProductos[i]);
+    };
 
     // counter de productos para el CARRITO
     let botonesDisminuirCantidad = document.getElementsByName("disminuirCantidad");
@@ -91,49 +139,6 @@ window.onload = function () {
             mostrarSubtotalEnvio();
         }
     );
-
-    //funcion mostrarproductos en filtro
-    let botonProductos = document.getElementById("filtroProductos");
-    botonProductos.onclick = () => {
-        mostrarProductos(listaProductos);
-    }
-
-    // FUNCION FILTER LISTAPRODUCTOS en tienda
-    let elementosFiltro = document.getElementsByName("navBarFiltro");
-    elementosFiltro.forEach(elementoBoton =>
-        elementoBoton.onclick = (evento) => {
-            let botonQueHicieronClick = evento.target.innerText;
-            let listaFiltrada = [];
-            listaFiltrada = listaProductos.filter(unProducto => unProducto.categoria == botonQueHicieronClick.toLowerCase());
-            mostrarProductos(listaFiltrada);
-        }
-    );
-
-
-    let botonVaciarCarrito = document.getElementById("botonVaciarCarrito");
-    botonVaciarCarrito.onclick = () => {
-        servicioCarrito.canasto = [];
-
-        elementoContendorSubtotalEnvio.innerHTML = ` 
-    <li class="list-group-item">
-        <div class="card-carrito">
-            <p id="sinProductos"> No hay productos agregados</p>
-        </div>
-    </li>`
-        mostrarProductosCarrito(servicioCarrito.canasto);
-    }
-
-}
-
-
-// FUNCION MOSTRARPRODUCTOS en tienda
-function mostrarProductos(listaProductos) {
-    let elementoArticulos = document.getElementById("articulos");
-    elementoArticulos.innerHTML = "";
-
-    for (let i = 0; i < listaProductos?.length; i++) {
-        elementoArticulos.innerHTML += generarHTML(listaProductos[i]);
-    }
 };
 
 
@@ -179,7 +184,7 @@ function mostrarProductosCarrito() {
     elementoContenedorCarrito.innerHTML = "";
     for (let i = 0; i < servicioCarrito.canasto.length; i++) {
         elementoContenedorCarrito.innerHTML += generarCardHTMLCarrito(servicioCarrito.canasto[i]);
-    }
+    };
     costoCarrito(servicioCarrito.canasto);
 
     let botonesTacho = document.getElementsByName("tachoParaEliminar");
@@ -199,11 +204,20 @@ function botonEliminarDelCarritoClick(evento) {
     let posicionAEliminar = servicioCarrito.canasto.findIndex(producto => producto.MacetaOPlanta.numeroProducto == numeroProducto);
     servicioCarrito.canasto.splice(posicionAEliminar, 1);
     mostrarProductosCarrito(servicioCarrito.canasto);
-    costoCarrito(servicioCarrito.canasto);
-    mostrarSubtotalEnvio();
-    showCarrito();
-    if (servicioCarrito.canasto == []) { vaciarYMostrarCartelCarritoVacio() };
-}
+
+    if (servicioCarrito.canasto.length === 0) {
+        elementoContendorSubtotalVacio.innerHTML = ` 
+            <li class="list-group-item">
+                <div class="card-carrito">
+                    <p id="sinProductos"> No hay productos agregados</p>
+                </div>
+            </li>`
+    } else {
+        costoCarrito(servicioCarrito.canasto);
+        mostrarSubtotalEnvio();
+        showCarrito();
+    };
+};
 
 // Generar HTMLCarrito ()
 function generarCardHTMLCarrito(itemCarrito) {
@@ -224,26 +238,12 @@ function generarCardHTMLCarrito(itemCarrito) {
     </li>`
 
     return (htmlCarrito);
-}
-
-/*// Vaciar Carrito de compra;
-function vaciarYMostrarCartelCarritoVacio() {
-    servicioCarrito.canasto = [];
-
-    elementoContendorSubtotalEnvio.innerHTML = ` <li class="list-group-item">
-    <div class="card-carrito">
-    <p id="sinProductos" > No hay productos agregados</p>
-         
-    </div>
-    </li>`
-    mostrarProductosCarrito(servicioCarrito.canasto);
-}
-*/
+};
 
 // funcion mostrar subtotal y costo de envio - CARRITO ;
 function mostrarSubtotalEnvio() {
-    elementoContendorSubtotalEnvio = document.getElementById("subtotalEnvio");
-    elementoContendorSubtotalEnvio.innerHTML = ` <li class="list-group-item">
+    elementoContendorSubtotalVacio = document.getElementById("subtotalEnvio");
+    elementoContendorSubtotalVacio.innerHTML = ` <li class="list-group-item">
     <div class="card-carrito">
     <p> Costo de envío: $${envio}</p>
     <h5 class="card-title">Total con envío: $${total + envio}</h5> 
@@ -264,7 +264,7 @@ function costoCarrito() {
     total = 0;
     for (let i = 0; i < servicioCarrito.canasto.length; i++) {
         total += (servicioCarrito.canasto[i].MacetaOPlanta.precio * servicioCarrito.canasto[i].cantidad);
-    }
+    };
     return (total);
 
 };
@@ -272,16 +272,27 @@ function costoCarrito() {
 
 // funciones para mostrar y ocultar productos;
 function hideShowProductos() {
+
     elementoCarrito = document.getElementById("popUpCarrito");
     if (elementoCarrito.style.display == "block") {
         elementoCarrito.style.display = "none";
-    }
-    else {
+    } else {
         elementoCarrito.style.display = "block";
+        if (servicioCarrito.canasto.length === 0) {
+            mostrarSubtotalEnvio();
+            elementoContendorSubtotalVacio.innerHTML = ` 
+            <li class="list-group-item">
+                <div class="card-carrito">
+                    <p id="sinProductos"> No hay productos agregados</p>
+                </div>
+            </li>`
 
-        mostrarProductosCarrito();
-        mostrarSubtotalEnvio();
-    }
+        } else {
+            mostrarProductosCarrito();
+            mostrarSubtotalEnvio();
+            showCarrito()
+        };
+    };
 };
 
 
@@ -290,13 +301,11 @@ function showCarrito() {
     elementoCarrito.style.display = "block";
 };
 
-
-
-// MERCADOPAGO
+// MERCADOPAGO;
 const mp = new MercadoPago('TEST-14b726e0-811d-4ca1-ae2d-a2abd12469e8', {
     locale: 'es-AR',
     advancedFraudPrevention: true,
-})
+});
 
 const checkout = mp.checkout({
     preference: {
