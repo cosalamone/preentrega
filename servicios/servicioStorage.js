@@ -1,9 +1,11 @@
 
 import { Planta } from "../clases/planta.js";
 import { Maceta } from "../clases/maceta.js";
+import { ItemCarrito } from "../clases/itemCarrito.js";
 
 export class ServicioStorage {
     constructor() { }
+    
     almacenarProductos(canasto) {
         let jString = JSON.stringify(canasto);
         localStorage.setItem("carrito", jString);
@@ -17,7 +19,7 @@ export class ServicioStorage {
             if (almacenados != null) {
 
                 for (const productoGuardado of almacenados) {
-                    let esPlanta = (productoGuardado.MacetaOPlanta.categoria == "planta");
+                    let esPlanta = (productoGuardado.MacetaOPlanta.categoria == 'plantas');
 
                     let item = new ItemCarrito(
                         esPlanta ? new Planta(productoGuardado.MacetaOPlanta) : new Maceta(productoGuardado.MacetaOPlanta),
