@@ -1,29 +1,28 @@
-export  class ServicioMercadoPago {
-    constructor (){}
-    pagarConMercadoPago () {
-        return pagarConMercadoPago(canasto);
-    }
+import { ItemCarrito } from "../clases/itemCarrito.js";
+import { ServicioCarrito } from "./servicioCarrito.js";
 
-}
+let itemCarrito = new ItemCarrito ();
 
-// funcion que simula backend, ya que el acces token del vendedor deberia ir ahi, porque en el frontend está expuesto
-function pagarConMercadoPago(canasto) {
+export class ServicioMercadoPago {
+    constructor() {}
 
+    // funcion que simula backend, ya que el acces token del vendedor deberia ir ahi, porque en el frontend está expuesto
+    pagarConMercadoPago(canasto){
     let myHeaders = new Headers();
     const ACCESS_TOKEN_VENDEDOR = "APP_USR-8855633324297819-051818-59fc62a2c58d61b5151a92d54660062e-1125631595";
     myHeaders.append("Authorization", `Bearer ${ACCESS_TOKEN_VENDEDOR}`);
     myHeaders.append("Content-Type", "application/json");
 
-    let items = canasto.map(producto => {
+    let items = canasto.map(itemCarrito => {
         return {
-            id: producto.numeroProducto,
-            title: producto.titulo,
+            id: itemCarrito.MacetaOPlanta.numeroProducto,
+            title: itemCarrito.MacetaOPlanta.titulo,
             currency_id: "ARS",
-            picture_url: producto.foto,
-            desription: producto.descripcion,
+            picture_url: itemCarrito.MacetaOPlanta.foto,
+            desription: itemCarrito.MacetaOPlanta.descripcion,
             category_id: "art",
-            quantity: 1,
-            unit_price: producto.precio,
+            quantity: itemCarrito.cantidad,
+            unit_price: itemCarrito.MacetaOPlanta.precio,
         }
     })
 
@@ -89,4 +88,6 @@ function pagarConMercadoPago(canasto) {
             location.href = linkPago;
         })
         .catch(error => console.log('error', error));
+}
+
 }
