@@ -69,6 +69,11 @@ h1,h2,h3,h4,h5,h6 {
     color: black;
 }
 
+.navbarFiltro{
+    font-size: 18px;
+    padding-left: 0px !important;
+    
+}
 .margin-logo {
     margin-left: 12px !important;
 }
