@@ -40,7 +40,7 @@ window.onload = function () {
                 confirmButtonText: 'Regresar a Sucu.home'
             })
         }
-    }
+    };
 
     mostrarProductos(listaProductos);
 
@@ -111,22 +111,6 @@ window.onload = function () {
 
 
 
-    // ELIMINAR productos de CANASTO
-    let botonTacho = document.getElementsByName("tachoParaEliminar");
-    botonTacho.forEach(elementoBoton =>
-        elementoBoton.onclick = (evento) => {  // falta ver como le mando numeroProducto que debe bscar y eliminar
-            let numeroProducto = evento.target.nextElementSibling
-            let posicionAEliminar = servicioCarrito.canasto.findIndex(producto => producto.numeroProducto == numeroProducto);
-            servicioCarrito.canasto.splice(posicionAEliminar, 1);
-            mostrarProductosCarrito(servicioCarrito.canasto);
-            costoCarrito(servicioCarrito.canasto);
-            mostrarSubtotalEnvio();
-            showCarrito();
-            if (servicioCarrito.canasto = []) { vaciarCarritoCompra() }
-        }
-    );
-
-
 
 }
 
@@ -186,31 +170,65 @@ function mostrarProductosCarrito() {
         elementoContenedorCarrito.innerHTML += generarCardHTMLCarrito(servicioCarrito.canasto[i]);
     }
     costoCarrito(servicioCarrito.canasto);
+
+    let botonesTacho = document.getElementsByName("tachoParaEliminar");
+    botonesTacho.forEach(elementoBoton =>
+        elementoBoton.onclick = (evento) => botonEliminarDelCarritoClick(evento)
+    );
+
     showCarrito();
     servicioStorage.almacenarProductos(servicioCarrito.canasto);
 };
+
+function botonEliminarDelCarritoClick(evento) {
+    let botonQueHicieronClick = evento.target;
+    let numeroProducto = Number(botonQueHicieronClick.nextElementSibling.innerText);
+    let posicionAEliminar = servicioCarrito.canasto.findIndex(producto => producto.MacetaOPlanta.numeroProducto == numeroProducto);
+    servicioCarrito.canasto.splice(posicionAEliminar, 1);
+    mostrarProductosCarrito(servicioCarrito.canasto);
+    costoCarrito(servicioCarrito.canasto);
+    mostrarSubtotalEnvio();
+    showCarrito();
+    if (servicioCarrito.canasto == []) { vaciarYMostrarCartelCarritoVacio() };
+}
 
 // Generar HTMLCarrito ()
 function generarCardHTMLCarrito(itemCarrito) {
     let htmlCarrito = ` 
     <li class="list-group-item animate__animated animate__fadeIn">
-    <div class="card-carrito">
-    <h5 class="card-title">${itemCarrito.MacetaOPlanta.titulo() || "[Producto inexistente]"}</h5>
-    <p> Cantidad: ${itemCarrito.cantidad} </p>
-    <p hidden> ${itemCarrito.MacetaOPlanta.numeroProducto} </p>
-    <div>
-    <span class="precio badge bg-dark">$${(itemCarrito?.MacetaOPlanta.precio * itemCarrito.cantidad)}</span>  
-    <a href="#!" name="tachoParaEliminar"> <i class="iTrash bi bi-trash3"></i></a>
-    <p hidden> ${itemCarrito.MacetaOPlanta.numeroProducto} </p>
-    </div>
-    </div>
+        <div class="card-carrito">
+            <h5 class="card-title">${itemCarrito.MacetaOPlanta.titulo() || "[Producto inexistente]"}</h5>
+            <p> Cantidad: ${itemCarrito.cantidad} </p>
+            <p hidden> ${itemCarrito.MacetaOPlanta.numeroProducto} </p>
+            <div>
+                <span class="precio badge bg-dark">$${(itemCarrito?.MacetaOPlanta.precio * itemCarrito.cantidad)}</span>  
+                <a href="#!" name="tachoParaEliminar"> 
+                <i class="iTrash bi bi-trash3"></i>
+                <p hidden> ${itemCarrito.MacetaOPlanta.numeroProducto} </p>
+                </a>
+            </div>
+        </div>
     </li>`
+
     return (htmlCarrito);
 }
 
 
-// Vaciar Carrito de compra;
-function vaciarCarritoCompra() {
+let botonVaciarCarrito = document.getElementsByClassName("buttonVaciarCarrito");
+botonVaciarCarrito.onclick = () => {
+    servicioCarrito.canasto = [];
+
+    elementoContendorSubtotalEnvio.innerHTML = ` 
+    <li class="list-group-item">
+        <div class="card-carrito">
+            <p id="sinProductos"> No hay productos agregados</p>
+        </div>
+    </li>`
+    mostrarProductosCarrito(servicioCarrito.canasto);
+}
+
+/*// Vaciar Carrito de compra;
+function vaciarYMostrarCartelCarritoVacio() {
     servicioCarrito.canasto = [];
 
     elementoContendorSubtotalEnvio.innerHTML = ` <li class="list-group-item">
@@ -221,7 +239,7 @@ function vaciarCarritoCompra() {
     </li>`
     mostrarProductosCarrito(servicioCarrito.canasto);
 }
-
+*/
 
 // funcion mostrar subtotal y costo de envio - CARRITO ;
 function mostrarSubtotalEnvio() {
@@ -233,10 +251,10 @@ function mostrarSubtotalEnvio() {
     <button id="botonMercadoPago"  class="choi-container">Pagá</button>
     </div>
     </li>`
-    abonar();
+    onClickParaAbonar();
 };
 
-function abonar() {
+function onClickParaAbonar() {
     let botonMercadoPago = document.getElementById("botonMercadoPago");
     botonMercadoPago.onclick = () => {
         servicioMercadoPago.pagarConMercadoPago(servicioCarrito.canasto);
