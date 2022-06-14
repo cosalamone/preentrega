@@ -1,0 +1,153 @@
+body {
+    background-color: rgb(181, 223, 147);
+    margin: 0em;
+    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Fjalla One', sans-serif;
+}
+
+.cover {
+    height: 400px;
+    color: white;
+    background-image:url(./fotos/rsz_portada-dos.jpg);
+    background-size: cover;
+    background-position: center;
+    background-color:rgba(0,0,0,0.65);
+    background-blend-mode: darken;
+}
+
+.cover-small{
+    height: 200px;
+    background-blend-mode: normal;
+}
+
+.card {
+    border:0 !important;
+    box-shadow:  0 4px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
+}
+
+.card-title{
+    min-height: 2.5rem;
+}
+
+.card-text{
+    min-height: 9.5rem;
+    text-align: justify;
+}
+
+.navid {
+    height: 1000px;
+    background-image:url(./fotos/rsz_navidad.jpg);
+    background-size: cover;
+    background-position: center;
+    background-color:rgba(0,0,0,0.65);
+    background-blend-mode: darken;
+    font-size: 150px;
+    color: wheat;
+    text-align: center;
+}
+
+.stripe-container, .slider-container{
+    display: flex;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.product-stripe, .slider{
+    overflow-x: scroll;
+}
+
+.stripe-container .card{
+    width: 300px;
+    flex-shrink:0;
+    margin-right: 2rem;
+}
+
+.responsive-iframe{
+    position: relative;
+    padding-top: 56.25%;
+}
+
+.responsive-iframe iframe{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.slider{
+    overflow-x: hidden;
+}
+
+.slider-container{
+    transform: translateX(0);
+    animation: slider 8s infinite;
+}
+
+.image-container{
+    width: 100%;
+    padding-top:56.25%;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+@keyframes slider {
+    0%{
+        transform: translateX(0);
+    }
+    
+    20%{
+        transform: translateX(0);
+    }
+
+    25%{
+        transform: translateX(-100%);
+    }
+
+    45%{
+        transform: translateX(-100%);
+    }
+
+    50%{
+        transform: translateX(-200%);
+    }
+
+    70%{
+        transform: translateX(-200%);
+    }
+    75%{
+        transform: translateX(-300%);
+    }
+
+
+    95%{
+        transform: translateX(-300%);
+    }
+
+    100%{
+        transform: translateX(0);
+    }
+}
+
+#btn_enviar{
+    margin-left: 15px;
+}
+
+.margin-logo {
+    margin-left: 12px !important;
+}
+
+.navbartienda {
+    display: inline-flex !important; 
+    width: 20%;
+}
+
+.presentacion-tienda{
+    float: right;
+    width: 75%;
+}
