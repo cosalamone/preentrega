@@ -228,7 +228,7 @@ function generarCardHTMLCarrito(itemCarrito) {
             <p> Cantidad: ${itemCarrito.cantidad} </p>
             <p hidden> ${itemCarrito.MacetaOPlanta.numeroProducto} </p>
             <div>
-                <span class="precio badge bg-dark">$${(itemCarrito?.MacetaOPlanta.precio * itemCarrito.cantidad)}</span>  
+                <p>subtotal por producto: </p><span class="precio badge bg-dark"> $${(itemCarrito?.MacetaOPlanta.precio * itemCarrito.cantidad)}</span>  
                 <a href="#!" name="tachoParaEliminar"> 
                 <i class="iTrash bi bi-trash3"></i>
                 <p hidden> ${itemCarrito.MacetaOPlanta.numeroProducto} </p>

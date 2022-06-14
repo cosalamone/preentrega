@@ -24,10 +24,10 @@ h1,h2,h3,h4,h5,h6 {
     background-blend-mode: normal;
 }
 
-.card {
+#articulos .card {
     border:0 !important;
     box-shadow:  0 4px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
-    height: 150;
+    height: 400px;
     
 }
 
@@ -37,16 +37,9 @@ h1,h2,h3,h4,h5,h6 {
 
 .card-text{
     height: 50px;
-    width: 98%;
+    width: 100%;
     text-align: justify;
-    overflow: hidden;
-    
-}
-
-.card-text:hover{
-    overflow: visible; 
-    white-space: normal;
-    height:auto;  
+    margin-bottom: 24px;
 }
 
 .mr-0{
@@ -102,6 +95,8 @@ h1,h2,h3,h4,h5,h6 {
     position: fixed;
     top: 12;
     right: 0; 
+    background-color: #fff;
+    z-index: 9999;
 
 }
 
@@ -202,7 +197,7 @@ h1,h2,h3,h4,h5,h6 {
 
 ul.nav.carrito {
     position: absolute;
-    right: 0;
+    right: 12px;
     background-color: rgb(90, 107, 76);
     border-radius: 4px;
 }
