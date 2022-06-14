@@ -98,6 +98,13 @@ h1,h2,h3,h4,h5,h6 {
   width: 100%;
 }
 
+.sticky-carrito {
+    position: fixed;
+    top: 12;
+    right: 0; 
+
+}
+
 .iCart{
     font-size: 18px;
 }
