@@ -10,7 +10,7 @@ export class ServicioStorage {
         let jString = JSON.stringify(canasto);
         localStorage.setItem("carrito", jString);
     }
-
+//dgfdgfdgfgfdgf
     recuperarProductosAlmacenadosAsync() {
         return new Promise((resolve, reject) => {
 
