@@ -3,18 +3,20 @@ import { ServicioMercadoPago } from "./servicios/servicioMercadoPago.js";
 import { ServicioStorage } from "./servicios/servicioStorage.js";
 import { ServicioCarrito } from "./servicios/servicioCarrito.js";
 
-let listaProductos = new ServicioProductos().traerProductos();
+
 
 let servicioMercadoPago = new ServicioMercadoPago();
 let servicioStorage = new ServicioStorage();
 let servicioCarrito = new ServicioCarrito();
+let servicioProductos = new ServicioProductos();
+
 
 let html = "";
 let envio = 349;
 let elementoCarrito;
 let elementoContendorSubtotalVacio;
 
-window.onload = function () {
+window.onload = async function () {
     //ESTO SE HACE EN EL ONLOAD, CUANDO SE CARGUA LA PAGINA REVISA SI ES UN REENVIO DESDE MP ;
     let searchParams = new URLSearchParams(window.location.search)
     searchParams.has('status') // true
@@ -39,7 +41,9 @@ window.onload = function () {
         }
     };
 
-    mostrarProductos(listaProductos);
+    let listaProductos = servicioProductos.obtenerProductosBD();
+    
+    mostrarProductos(await listaProductos);
 
     servicioStorage.recuperarProductosAlmacenadosAsync().then((response) => servicioCarrito.canasto = response)
         .catch(error => console.log(error, "error"));
@@ -312,6 +316,3 @@ const checkout = mp.checkout({
         id: '3790521406371018'
     },
 });
-
-
-
