@@ -42,15 +42,17 @@ window.onload = async function () {
     };
 
     let listaProductos = servicioProductos.obtenerProductosBD();
-    
+
     mostrarProductos(await listaProductos);
 
     servicioStorage.recuperarProductosAlmacenadosAsync().then((response) => servicioCarrito.canasto = response)
         .catch(error => console.log(error, "error"));
 
+
     // ICONOCARRITO - NAVBAR
     let botonCarrito = document.getElementById("iconoCarrito");
     botonCarrito.onclick = () => hideShowProductos();
+
 
     //funcion mostrarproductos en filtro
     let botonProductos = document.getElementById("filtroProductos");
@@ -66,7 +68,7 @@ window.onload = async function () {
     // FUNCION FILTER LISTAPRODUCTOS en tienda
     let elementosFiltro = document.getElementsByName("navBarFiltro");
     elementosFiltro.forEach(elementoBoton =>
-        elementoBoton.onclick = (evento) => {
+        elementoBoton.onclick = async (evento) => {
             document.getElementById("filtroProductos").classList.remove("active")
             document.getElementsByName("navBarFiltro").forEach(elemento => elemento.classList.remove("active"));
 
@@ -74,10 +76,12 @@ window.onload = async function () {
 
             let botonQueHicieronClick = evento.target.innerText;
             let listaFiltrada = [];
-            listaFiltrada = listaProductos.filter(unProducto => unProducto.categoria == botonQueHicieronClick.toLowerCase());
+            listaFiltrada =  (await listaProductos).filter(unProducto => unProducto.categoria == botonQueHicieronClick.toLowerCase());
             mostrarProductos(listaFiltrada);
         }
     )
+
+
 
 
     let botonVaciarCarrito = document.getElementById("botonVaciarCarrito");
