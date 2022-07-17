@@ -41,7 +41,7 @@ window.onload = async function () {
         }
     };
 
-    // let listaProductos = servicioProductos.obtenerProductosBD();
+    let listaProductos = servicioProductos.obtenerProductosBD();
 
     mostrarProductos(await listaProductos);
 
