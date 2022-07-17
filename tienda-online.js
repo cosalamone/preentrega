@@ -41,7 +41,7 @@ window.onload = async function () {
         }
     };
 
-    let listaProductos = servicioProductos.obtenerProductosBD();
+    // let listaProductos = servicioProductos.obtenerProductosBD();
 
     mostrarProductos(await listaProductos);
 
@@ -56,11 +56,11 @@ window.onload = async function () {
 
     //funcion mostrarproductos en filtro
     let botonProductos = document.getElementById("filtroProductos");
-    botonProductos.onclick = () => {
+    botonProductos.onclick = async() => {
         document.getElementsByName("navBarFiltro").forEach(elemento => elemento.classList.remove("active"));
 
         document.getElementById("filtroProductos").classList.add("active")
-        mostrarProductos(listaProductos);
+        mostrarProductos(await listaProductos);
     };
 
 
