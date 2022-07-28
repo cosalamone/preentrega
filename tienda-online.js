@@ -3,18 +3,20 @@ import { ServicioMercadoPago } from "./servicios/servicioMercadoPago.js";
 import { ServicioStorage } from "./servicios/servicioStorage.js";
 import { ServicioCarrito } from "./servicios/servicioCarrito.js";
 
-let listaProductos = new ServicioProductos().traerProductos();
+
 
 let servicioMercadoPago = new ServicioMercadoPago();
 let servicioStorage = new ServicioStorage();
 let servicioCarrito = new ServicioCarrito();
+let servicioProductos = new ServicioProductos();
+
 
 let html = "";
 let envio = 349;
 let elementoCarrito;
 let elementoContendorSubtotalVacio;
 
-window.onload = function () {
+window.onload = async function () {
     //ESTO SE HACE EN EL ONLOAD, CUANDO SE CARGUA LA PAGINA REVISA SI ES UN REENVIO DESDE MP ;
     let searchParams = new URLSearchParams(window.location.search)
     searchParams.has('status') // true
@@ -39,22 +41,26 @@ window.onload = function () {
         }
     };
 
-    mostrarProductos(listaProductos);
+    let listaProductos = servicioProductos.obtenerProductosBD();
+
+    mostrarProductos(await listaProductos);
 
     servicioStorage.recuperarProductosAlmacenadosAsync().then((response) => servicioCarrito.canasto = response)
         .catch(error => console.log(error, "error"));
+
 
     // ICONOCARRITO - NAVBAR
     let botonCarrito = document.getElementById("iconoCarrito");
     botonCarrito.onclick = () => hideShowProductos();
 
+
     //funcion mostrarproductos en filtro
     let botonProductos = document.getElementById("filtroProductos");
-    botonProductos.onclick = () => {
+    botonProductos.onclick = async() => {
         document.getElementsByName("navBarFiltro").forEach(elemento => elemento.classList.remove("active"));
 
         document.getElementById("filtroProductos").classList.add("active")
-        mostrarProductos(listaProductos);
+        mostrarProductos(await listaProductos);
     };
 
 
@@ -62,7 +68,7 @@ window.onload = function () {
     // FUNCION FILTER LISTAPRODUCTOS en tienda
     let elementosFiltro = document.getElementsByName("navBarFiltro");
     elementosFiltro.forEach(elementoBoton =>
-        elementoBoton.onclick = (evento) => {
+        elementoBoton.onclick = async (evento) => {
             document.getElementById("filtroProductos").classList.remove("active")
             document.getElementsByName("navBarFiltro").forEach(elemento => elemento.classList.remove("active"));
 
@@ -70,10 +76,12 @@ window.onload = function () {
 
             let botonQueHicieronClick = evento.target.innerText;
             let listaFiltrada = [];
-            listaFiltrada = listaProductos.filter(unProducto => unProducto.categoria == botonQueHicieronClick.toLowerCase());
+            listaFiltrada =  (await listaProductos).filter(unProducto => unProducto.categoria == botonQueHicieronClick.toLowerCase());
             mostrarProductos(listaFiltrada);
         }
     )
+
+
 
 
     let botonVaciarCarrito = document.getElementById("botonVaciarCarrito");
@@ -312,6 +320,3 @@ const checkout = mp.checkout({
         id: '3790521406371018'
     },
 });
-
-
-

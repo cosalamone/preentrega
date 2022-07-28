@@ -55,9 +55,9 @@
                 <ul class="list-group list-group-flush" id="subtotalEnvio">
 
                 </ul>
-            
+
                 <button id="botonVaciarCarrito" class="buttonVaciarCarrito">Vaciá tu carrito</button>
-                
+
             </div>
         </section>
 
@@ -79,7 +79,6 @@
 
 
     <!-- BARRA DE NAVEGACION TIENDA / FILTRO -->
-
     <nav id="navbar-example3 "
         class=" mt-4 d-flex navbar navbar-light bg-light flex-column align-items-stretch p-3 navbartienda">
 
@@ -89,20 +88,110 @@
             <li class="list-group-item" name="navBarFiltro">Plantas</li>
             <li class="list-group-item" name="navBarFiltro">Macetas</li>
         </ul>
-
     </nav>
 
     <!-- CONTENIDO TIENDA  -->
     <section class="presentacion-tienda">
+
+<img>
         <div>
             <div class="mt-4">
                 <div class="row row-cols-1 row-cols-md-3 g-4 mr-0 " ; id="articulos">
+                    <div class="col">
+                        <div
+                            class="loading card animate__animated animate__fadeIn animate__fadeOut animate__slow animate__infinite">
+                            <div title="producto cargando" class="cover cover-small"
+                                style="background-image: url(./fotos/cargando.png)" ;>
+                            </div>
+
+                            <div class="card-body">
+                                <span class="cargando">______________</span><br>
+                                <span class="cargando">___________________________</span>
+                                <p class=" card-text"> </p>
+
+
+                                <div>
+                                    <span class="precio badge bg-dark cargando">$ __</span>
+                                    <a class="nav-link" href="#!" name="botonAddProducto">
+                                        <i class="cargando-iconos iCarrito bi bi-cart-plus"></i>
+                                    </a>
+                                </div>
+
+                                <div class="cargando-counter">
+                                    <span class="down cargando-counter" name="disminuirCantidad">-</span>
+                                    <input type="text" disabled id="${producto?.numeroProducto}" value="1">
+                                    <span class="up cargando-counter" name="aumentarCantidad">+</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="col">
+                        <div
+                            class="loading card animate__animated animate__fadeIn animate__fadeOut animate__slow animate__infinite">
+                            <div title="producto cargando" class="cover cover-small"
+                                style="background-image: url(./fotos/cargando.png)" ;>
+                            </div>
+
+                            <div class="card-body">
+                                <span class="cargando">______________</span><br>
+                                <span class="cargando">___________________________</span>
+                                <p class=" card-text"> </p>
+
+
+                                <div>
+                                    <span class="precio badge bg-dark cargando">$ __</span>
+                                    <a class="nav-link" href="#!" name="botonAddProducto">
+                                        <i class="cargando-iconos iCarrito bi bi-cart-plus"></i>
+                                    </a>
+                                </div>
+
+                                <div class="cargando-counter">
+                                    <span class="down cargando-counter" name="disminuirCantidad">-</span>
+                                    <input type="text" disabled id="${producto?.numeroProducto}" value="1">
+                                    <span class="up cargando-counter" name="aumentarCantidad">+</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="col">
+                        <div
+                            class="loading card animate__animated animate__fadeIn animate__fadeOut animate__slow animate__infinite">
+                            <div title="producto cargando" class="cover cover-small"
+                                style="background-image: url(./fotos/cargando.png)" ;>
+                            </div>
+
+                            <div class="card-body">
+                                <span class="cargando">______________</span><br>
+                                <span class="cargando">___________________________</span>
+                                <p class=" card-text"> </p>
+
+
+                                <div>
+                                    <span class="precio badge bg-dark cargando">$ __</span>
+                                    <a class="nav-link" href="#!" name="botonAddProducto">
+                                        <i class="cargando-iconos iCarrito bi bi-cart-plus"></i>
+                                    </a>
+                                </div>
+
+                                <div class="cargando-counter">
+                                    <span class="down cargando-counter" name="disminuirCantidad">-</span>
+                                    <input type="text" disabled id="${producto?.numeroProducto}" value="1">
+                                    <span class="up cargando-counter" name="aumentarCantidad">+</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
                 </div>
             </div>
 
         </div>
     </section>
-
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://sdk.mercadopago.com/js/v2"></script>

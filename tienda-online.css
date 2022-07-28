@@ -5,44 +5,49 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Fjalla One', sans-serif;
 }
 
 .cover {
     height: 400px;
     color: white;
-    background-image:url(./fotos/rsz_portada-dos.jpg);
+    background-image: url(./fotos/rsz_portada-dos.jpg);
     background-size: cover;
     background-position: center;
-    background-color:rgba(0,0,0,0.65);
+    background-color: rgba(0, 0, 0, 0.65);
     background-blend-mode: darken;
 }
 
-.cover-small{
+.cover-small {
     height: 200px;
     background-blend-mode: normal;
 }
 
 #articulos .card {
-    border:0 !important;
-    box-shadow:  0 4px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
+    border: 0 !important;
+    box-shadow: 0 4px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     height: 400px;
-    
+
 }
 
-.card-title{
+.card-title {
     min-height: 2rem;
 }
 
-.card-text{
+.card-text {
     height: 50px;
     width: 100%;
     text-align: justify;
     margin-bottom: 24px;
 }
 
-.mr-0{
+.mr-0 {
     margin-right: 0 !important;
 }
 
@@ -62,21 +67,22 @@ h1,h2,h3,h4,h5,h6 {
     color: black;
 }
 
-.navbarFiltro{
+.navbarFiltro {
     font-size: 18px;
     padding-left: 0px !important;
-    
+
 }
+
 .margin-logo {
     margin-left: 12px !important;
 }
 
 .navbartienda {
-    display: inline-flex !important; 
+    display: inline-flex !important;
     width: 18%;
 }
 
-.presentacion-tienda{
+.presentacion-tienda {
     float: right;
     width: 75%;
 }
@@ -86,36 +92,36 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
 .sticky-carrito {
     position: fixed;
     top: 12;
-    right: 0; 
+    right: 0;
     background-color: #fff;
     z-index: 9999;
 
 }
 
-.iCart{
+.iCart {
     font-size: 18px;
 }
 
-.iCarrito{
+.iCarrito {
     float: right;
     font-size: 25px;
     color: rgb(124, 161, 93);
 
 }
 
-.precio{
+.precio {
     float: left;
 }
 
-.iTrash{
+.iTrash {
     float: right;
 }
 
@@ -123,18 +129,18 @@ h1,h2,h3,h4,h5,h6 {
     display: none;
 }
 
-.carritoCompras{
+.carritoCompras {
     position: absolute;
     right: 12px;
     top: 70px;
     z-index: 9999;
     box-shadow: 5px 5px 10px 2px rgba(37, 37, 37, 0.8);
-    
-    
+
+
 }
 
-.choi-container{
-    background-color:#009ee3;
+.choi-container {
+    background-color: #009ee3;
     color: white;
     border-radius: 5px;
     border: none;
@@ -142,7 +148,7 @@ h1,h2,h3,h4,h5,h6 {
     justify-content: center;
     height: 35px;
     width: 55px;
-    float:right;
+    float: right;
     margin-bottom: 1rem;
 }
 
@@ -171,24 +177,25 @@ h1,h2,h3,h4,h5,h6 {
     font-size: 20px;
     padding: 0 10px;
     cursor: pointer;
-    color:  rgb(124, 161, 93);
+    color: rgb(124, 161, 93);
     user-select: none;
 }
 
-.buttonVaciarCarrito{
+.buttonVaciarCarrito {
     border: 0;
     font-size: 12px;
     background: rgb(90, 107, 76);
     color: #fff;
 }
 
-#sinProductos{
+#sinProductos {
     text-align: center;
 }
 
-#subtotalEnvio{
+#subtotalEnvio {
     display: block;
 }
+
 .list-group-item.active {
     background-color: rgb(90, 107, 76);
     border-color: rgb(90, 107, 76);
@@ -204,4 +211,56 @@ ul.nav.carrito {
 
 a#iconoCarrito {
     color: #fff;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+}
+
+.loading {
+    color: rgb(104, 101, 101);
+    position: relative;
+    animation: fadeIn 1s infinite alternate;
+}
+
+.cargando {
+    color: rgb(134, 134, 134);
+    background-color: rgb(134, 134, 134);
+    border-radius: 5px;
+}
+
+.cargando-iconos {
+    color: rgb(134, 134, 134);
+    border-radius: 5px;
+}
+
+.cargando-counter {
+    width: 150px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cargando-counter input {
+    width: 50px;
+    border: 0;
+    line-height: 30px;
+    font-size: 16px;
+    text-align: center;
+    background: rgb(134, 134, 134);;
+    color: #fff;
+    appearance: none;
+    outline: 0;
+}
+
+.cargando-counter span {
+    display: block;
+    font-size: 20px;
+    padding: 0 10px;
+    cursor: pointer;
+    color: rgb(134, 134, 134);;
+    user-select: none;
 }
